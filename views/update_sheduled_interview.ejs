@@ -1,0 +1,90 @@
+<!-- {k, company, student_list} -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editSheduleInterview<%= k._id %>">
+    Edit Shedule Interview
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="editSheduleInterview<%= k._id %>" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Shedule Interview</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="edit-sheduled-interview-modal-body<%= k._id %>" style="font-size:16px;">
+                <form id="edit-shedule-interview-form<%= k._id %>" method="POST" class="sign-in-form">
+                    <div class="form-group">
+                        <label for="profile">Profile</label>
+                        <input name="profile" type="input" class="form-control form-control-sm" id="profile"
+                            placeholder="enter Profile" value="<%= k.profile %>" autocomplete="off">
+                    </div>
+                    <label for="student">Student</br><small>*if student doesnt appear here pls add student and shedule
+                            interview</small></label>
+
+                    <select name="studentId" class="form-select" aria-label="Default select example" id="student">
+                        <option selected>Open this select menu</option>
+                        <% for(s of student_list){ %>
+                            <% if(k.studentId.equals(s._id)){ %>
+                                <option value="<%= s._id %>" selected>
+                                    <%= s.name %>
+                                </option>
+                                <% }else{ %>
+                                    <option value="<%= s._id %>">
+                                        <%= s.name %>
+                                    </option>
+                                <% } %>    
+                        <% } %>
+                    </select>
+                    <br>
+                    <label for="result">Result</label>
+                    <select name="result" class="form-select" aria-label="Default select example" id="result">
+                        <!-- <option selected>Open this select menu</option> -->
+                        <% if(k.result=="PASS"){ %>
+                            <option value="PASS" selected>PASS</option>    
+                        <% }else{ %>  
+                            <option value="PASS">PASS</option>
+                        <% } %> 
+                        <% console.log(k.result=="FAIL") %>
+                        <% if(k.result == "FAIL"){ %>
+                            <option value="FAIL" selected>FAIL</option>    
+                        <% }else{ %>  
+                            <option value="FAIL">FAIL</option>
+                        <% } %>
+                        <% console.log(k.result=="On Hold") %>
+                        <% if(k.result == "On Hold" ){ %>
+                            <option value="On Hold" selected>On Hold</option>    
+                        <% }else{ %>  
+                            <option value="On Hold">On Hold</option>
+                        <% } %>
+                        <% console.log(k.result=="Didn’t Attempt") %>
+                        <% if(k.result == "Didn’t Attempt"){ %>
+                            <option value="Didn’t Attempt" selected>Didn’t Attempt</option>    
+                        <% }else{ %>  
+                            <option value="Didn’t Attempt">Didn’t Attempt</option>
+                        <% } %>
+                    </select>
+                    <br>
+                    <input type="hidden" name="companyId" value="<%= company._id %>">
+                    <input type="hidden" name="date" value="<%= company.date %>">
+                    <input type="hidden" name="companyName" value="<%= company.companyName %>">
+                    <input type="hidden" name="interviewId" value="<%= k._id %>">
+                    <!-- <input type="hidden" name="studentName" value="<%= company._id %>" >  -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="editsheduledInterviewCloseButton<%= k._id %>" type="button" class="btn btn-secondary"
+                    data-dismiss="modal">Close</button>
+                <button
+                    onclick="editsheduleInterview('edit-shedule-interview-form<%= k._id %>', 'editsheduledInterviewCloseButton<%= k._id %>')"
+                    type="button" class="btn btn-primary">Save
+                    changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <script type="module" src="/js/browserify_updated.js"></script> -->
+<script type="text/javascript" src="/js/update_sheduled_interview.js"></script>

@@ -1,0 +1,26 @@
+<!-- {company, student_list} -->
+<div class="accordion" id="accordionExample" style="padding: 0px 3%;">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse"
+              data-target="#collapseOne<%= company._id %>" aria-expanded="false" aria-controls="collapseOne">
+              Collapsible Group Item #1 <i class="fa-regular fa-square-caret-down"
+                id="student-details-toggle<%= company._id %>"
+                onclick="toggle('student-details-toggle<%= company._id %>')"></i>
+            </button>
+      </h2>
+    </div>
+
+    <div id="collapseOne<%= company._id %>" class="collapse" aria-labelledby="headingOne"
+      data-parent="#accordionExample">
+      <div class="card-body">
+         <%- include('company_interview_table', company) %>
+         <%- include('shedule_interview_modal', {company, student_list}); %>
+         <%- include('sheduled_interview_table', {company, student_list}); %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="/js/accordian.js"></script>

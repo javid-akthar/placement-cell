@@ -1,0 +1,17 @@
+header{
+    // display:flex;
+    // height: 55px;
+    // width:100%;
+    // justify-content: space-between;
+    // align-items: center;
+    ul{
+        list-style-type:none;
+        display:flex;
+        li{
+            padding: 0px 10px;
+            padding-top:4px;
+            align-items: center;
+            display: flex;
+        }
+    }
+}

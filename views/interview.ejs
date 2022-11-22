@@ -1,0 +1,7 @@
+<div class="interview-container">
+    <% console.log(student_list) %>
+    <% console.log(company_list) %>
+    <% for(company of company_list){ %>
+       <%- include('company_accordian', {company, student_list}); %>
+    <%}%>    
+</div>

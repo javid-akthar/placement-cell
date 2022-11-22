@@ -1,0 +1,15 @@
+.signing-header{
+    text-align: center;
+}
+
+.sign-in-form, .sign-ip-form{
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    width: 100%;
+    input{
+        background-color: rgb(232,240,254)
+    }
+}

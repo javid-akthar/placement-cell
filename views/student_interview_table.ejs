@@ -1,0 +1,64 @@
+ 
+ <table id="student-interview-table<%= i._id %>" class="table table-bordered table-sm container-sm" style="width: 95%;";>
+    <thead>
+      <tr>
+        <th scope="col">S.No</th>
+        <th scope="col">company Name</th>
+        <th scope="col">profile</th>
+        <th scope="col">Interview sheduled date</th>
+        <th scope="col">result</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% let counter=1 %>
+    <% for(l of i.interviews){ %>
+      <tr id="interview-row<%= l._id %>">
+        <th scope="row"><%= counter %></th>
+        <td><%= l.companyName %> </td>
+        <td><%= l.profile %> </td>
+        <td><%= l.date %> </td>
+        <td><%= l.result %> </td>
+        <td><%- include('student_interview_edit', {i,l,company_list}) %></td>
+        <td><button onclick="interviewDelete('interview-row<%= l._id %>','<%= l._id %>')" type="button" class="btn btn-primary btn-sm">delete</button> </td>
+      </tr>
+    <% counter = counter+1 %>
+    <% } %> 
+      
+    </tbody>
+  </table>
+
+  <script>
+ 
+ interviewDelete = function(rowId, interviewDbId){
+         console.log('reached');
+         let deletableRow = $('#'+rowId);
+         console.log('deletableRow',deletableRow);
+        //  console.log('newPostForm.serialize()',newPostForm.serialize());
+        // console.log('insidesubmitccc',newPostForm.serialize());
+            //  document.getElementById(closeBtnId).click();
+             $.ajax({
+                 type: 'get',
+                 url: "/student/delete-interview?id="+interviewDbId,
+                //  data: newPostForm.serialize(),
+                 success: function(data){
+                     console.log(data);
+                    //  let currInterviewsCount = $('#'+stdTable+'>tbody>tr').length+1;
+                    //  console.log(currInterviewsCount);
+                    //  let newPost = newRow(data.data.addedInterview, currInterviewsCount);
+                    //  console.log(newPost);
+                    //  $('#'+stdTable+'>tbody').append(newPost);
+                    //  console.log(newPost);
+                    const element = document.getElementById(rowId);
+                    element.remove();
+                 }, error: function(error){
+                     console.log(error.responseText);
+                 }
+             });
+     }
+ 
+   
+ 
+ </script>
+
+
+   

@@ -1,0 +1,101 @@
+<!-- Button trigger modal -->
+<button   type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenterAddInterviewForStudent<%= i._id %>">
+    Add student
+  </button>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenterAddInterviewForStudent<%= i._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="font-size:16px;">
+            <form id="student-interview-add-submit<%= i._id %>" action="/student/add-interview" method="POST" class="sign-in-form">
+                <div class="form-group">
+                  <label for="profile">Enter Profile</label>
+                  <input name="profile"  type="input" class="form-control form-control-sm" id="profile" aria-describedby="profile" placeholder="Enter Profile" value="">
+                </div>
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <br>
+                    <input type="date" class="form-control form-control-sm" id="date" name="date">
+                </div>
+                <!-- <div class="form-group">
+                    <label for="result">Result</label>
+                    <input name="result"  type="input" class="form-control form-control-sm" id="result" aria-describedby="result" placeholder="Enter Result" value="">
+                </div> -->
+                    <label for="company">Company</label>
+                    <!-- <br> -->
+                    <select name="company" class="form-select" aria-label="Default select example" id="company" >
+                        <option selected>Open this select menu</option>
+                        <% for(k of company_list){ %>
+                            <option value="<%= k._id %>"><%= k.companyName %></option>
+                        <% } %>
+                    </select> 
+                    <br>
+                    <label for="result">Result</label>
+                    <!-- <br> -->
+                    <select name="result" class="form-select" aria-label="Default select example" id="result" >
+                        <option selected>Open this select menu</option>
+                            <option value="PASS">PASS</option>
+                            <option value="FAIL">FAIL</option>
+                            <option value="On Hold">On Hold</option>
+                            <option value="Didn’t Attempt">Didn’t Attempt</option>
+                    </select> 
+                    <br>
+                <input type="hidden" name="student" value="<%= i._id %>">
+                <input type="hidden" name="studentName" value="<%= i.name %>">
+                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button id="student-interview-add-close<%= i._id %>" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button onclick="addStudentInterview2('student-interview-add-submit<%= i._id %>', 'student-interview-add-close<%= i._id %>', 'student-interview-table<%= i._id %>')" type="button" class="btn btn-primary student-edit-submit">Save changes edit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+<!-- <script src="/js/student_interview_add.js"></script> -->
+<script>
+ 
+   addStudentInterview2 = function(formId, closeBtnId, stdTable){
+        console.log('reached');
+        let newPostForm = $('#'+formId);
+        console.log('newPostForm',newPostForm);
+        console.log('newPostForm.serialize()',newPostForm.serialize());
+            console.log('insidesubmitccc',newPostForm.serialize());
+            document.getElementById(closeBtnId).click();
+            $.ajax({
+                type: 'post',
+                url: '/student/add-interview',
+                data: newPostForm.serialize(),
+                success: function(data){
+                    console.log(data);
+                    let currInterviewsCount = $('#'+stdTable+'>tbody>tr').length+1;
+                    console.log(currInterviewsCount);
+                    let newPost = newRow(data.data.addedInterview, currInterviewsCount);
+                    console.log(newPost);
+                    $('#'+stdTable+'>tbody').append(newPost);
+                    console.log(newPost);
+                }, error: function(error){
+                    console.log(error.responseText);
+                }
+            });
+        // });
+    }
+
+    function newRow(addedInterview, currInterviewsCount){
+      return htmlElement = `<tr>
+        <th scope="row">${currInterviewsCount}</th>
+        <td>${addedInterview.companyName}</td>
+        <td>${addedInterview.profile}</td>
+        <td>${addedInterview.date}</td>
+        <td>${addedInterview.result}</td>
+      </tr>`;
+    }
+</script>

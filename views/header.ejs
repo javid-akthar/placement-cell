@@ -1,0 +1,35 @@
+<header class="navbar navbar-light" style="background-color: #e3f2fd;">
+    Page Header
+
+    <ul>
+        <% if (locals.user){ %>
+            <li>
+                <!-- <button type="button" class="btn btn-primary"> -->
+                    <a class="btn btn-primary" href="/company">Interview Page</a>
+                <!-- </button> -->
+            </li>
+            <li>
+                <a href="/student">
+                    <%= user.name %>
+                </a>
+            </li>
+            <li>
+                <!-- <button type="button" class="btn btn-primary"> -->
+                    <a class="btn btn-primary" href="/users/sign-out">Sign Out</a>
+                <!-- </button> -->
+            </li>
+        <% }else{ %>
+
+            <li>
+                <a href="/users/sign-in">Sign In</a>
+            </li>
+
+            <li>
+                <a href="/users/sign-up">Sign Up</a>
+            </li>
+
+
+        <% } %>
+    </ul>
+
+</header>
