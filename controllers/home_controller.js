@@ -2,9 +2,26 @@ const Student = require('../model/student');
 const Company = require('../model/company')
 module.exports.home = async function(req, res){
   let company_list = await Company.find({})
-  let student_list = await Student.find({}).populate('interviews');
-  // console.log('hhss', student_list);
-  // console.log('abccs',student_list[0].interviews[0]);
+  let student_list = await Student.find({})
+  .populate({
+    path: 'interviews',
+    populate: {
+      path: 'companyId'
+    }
+  });
+
+  // let posts = await Post.find({})
+  //       .sort('-createdAt')
+  //       .populate('user')
+  //       .populate({
+  //           path: 'comments',
+  //           populate: {
+  //               path: 'user'
+  //           },
+  //           populate: {
+  //               path: 'likes'
+  //           }
+  //       }).populate('likes');
 
     return res.render('home',{
             title: "Contact List",

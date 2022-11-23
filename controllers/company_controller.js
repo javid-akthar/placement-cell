@@ -18,7 +18,19 @@ module.exports.createCompany = function (req, res) {
 
 module.exports.showComapny = async function (req, res) {
     try {
-        let company_list = await Company.find({}).populate('students');
+        let company_list = await Company.find({})
+        .populate({
+            path: 'students',
+            populate: {
+                path: 'studentId'
+            }
+        });
+
+   
+
+        console.log('company_list',company_list);
+        console.log(company_list.students);
+        // console.log(company_list.students[0].studentId.name);
         let student_list = await Student.find({});
         res.render('interview', {
             title: "Placement Cell",
@@ -97,8 +109,6 @@ module.exports.deleteSheduledInterview =async function(req, res){
     console.log('req.query.interviewId',req.query.interviewId);
     let interviewId = req.query.interviewId;
     let companyId = req.query.companyId;
-    // let interviewId = req.body.interviewId;
-    // let companyId = req.body.companyId;
     await Interview.findByIdAndRemove(interviewId);
     let companyRecord = await Company.findByIdAndUpdate(companyId, {$pull: {students : companyId}});
     let modifiedCompanyRecord = await Company.findById(companyId).populate('students');

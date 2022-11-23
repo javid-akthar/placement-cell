@@ -9,122 +9,15 @@
     <%- include('interview_add_modal'); %>
       <p>Student List</p>
         <div id="student-details-container">
-          <ul>
+          <ul id="student-details-ul-container">
             <% for(i of student_list) {%>
-              <li>
-                <div class="accordion" id="accordionExample" style="padding: 0px 3%;">
-                  <div class="card">
-                    <div class="card-header" id="headingOne">
-                      <h2 class="mb-0">
-                        <span>
-                          <%= i.name %>
-                        </span>
-                        <%- include('student_edit_modal',{i} ); %>
-                          <%- include('student_interview_add',{i, company_list} ); %>
-                            <button class="btn btn-link" type="button" data-toggle="collapse"
-                              data-target="#collapseOne<%= i._id %>" aria-expanded="false" aria-controls="collapseOne">
-                              Collapsible Group Item #1 <i class="fa-regular fa-square-caret-down"
-                                id="student-details-toggle<%= i._id %>"
-                                onclick="toggle('student-details-toggle<%= i._id %>')"></i>
-                            </button>
-                      </h2>
-                    </div>
-
-                    <div id="collapseOne<%= i._id %>" class="collapse" aria-labelledby="headingOne"
-                      data-parent="#accordionExample">
-                      <div class="card-body">
-                        <table class="table table-bordered table-sm container-sm" style="width: 95%;" ;>
-                          <thead>
-                            <tr>
-                              <th scope="col">Field Name</th>
-                              <th scope="col">Value</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">Name</th>
-                              <td>
-                                <%= i.name%>
-                              </td>
-                            </tr>
-                            <tr>
-                              <th scope="row">Email</th>
-                              <td>
-                                <%= i.email%>
-                              </td>
-                            </tr>
-                            <tr>
-                              <th scope="row">Phone</th>
-                              <td>
-                                <%= i.phone%>
-                              </td>
-                            </tr>
-                            <tr>
-                              <th scope="row">College</th>
-                              <td>
-                                <%= i.college%>
-                              </td>
-                            </tr>
-                            <tr>
-                              <th scope="row">Batch</th>
-                              <td>
-                                <%= i.batch%>
-                              </td>
-                            </tr>
-                            <tr>
-                              <th scope="row">Status</th>
-                              <td>
-                                <%= i.status%>
-                              </td>
-                            </tr>
-                            <tr>
-                              <th scope="row">Dsa Score</th>
-                              <td>
-                                <%= i.dsaScore%>
-                              </td>
-                            </tr>
-                            <tr>
-                              <th scope="row">Web Dev Score</th>
-                              <td>
-                                <%= i.webDevelopmentScore%>
-                              </td>
-                            </tr>
-                            <tr>
-                              <th scope="row">React Score</th>
-                              <td>
-                                <%= i.reactScore%>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <div class="delete-button">
-                          <a href="/student/delete?id=<%= i._id %>">
-                            delete
-                          </a>
-                        </div>
-                        <%- include('student_interview_table', {i, company_list}) %>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <% } %>
+              <%- include('student_details_list', {i, company_list})%>
+            <% } %>
           </ul>
         </div>
 </body>
 
 </html>
 
-<!-- <script>
-  function toggle(ele) {
-    var element = document.getElementById(ele);
-    if (element.classList.contains("fa-square-caret-down")) {
-      element.classList.remove("fa-square-caret-down");
-      element.classList.add("fa-square-caret-up");
-    } else if (element.classList.contains("fa-square-caret-up")) {
-      element.classList.remove("fa-square-caret-up");
-      element.classList.add("fa-square-caret-down");
-    }
-  }
-</script> -->
+
 <script type="text/javascript" src="/js/accordian.js"></script>

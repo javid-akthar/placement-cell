@@ -1,10 +1,10 @@
 <!-- Button trigger modal -->
-<button   type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenterAdd">
+<button   type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenterAddStudent">
     Add student
   </button>
   
   <!-- Modal -->
-  <div class="modal fade" id="exampleModalCenterAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal fade" id="exampleModalCenterAddStudent" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -14,7 +14,7 @@
           </button>
         </div>
         <div class="modal-body" style="font-size:16px;">
-            <form id="student-add-form-submit" action="/student/create" method="POST" class="sign-in-form">
+            <form id="student-add-form-submit"  method="POST" class="sign-in-form">
                 <div class="form-group">
                   <label for="inputName">Name</label>
                   <input name="name"  type="name" class="form-control form-control-sm" id="inputName" aria-describedby="emailHelp" placeholder="Enter name" value="">
@@ -30,6 +30,10 @@
                   <div class="form-group">
                     <label for="college">College</label>
                     <input name="college"  type="input" class="form-control form-control-sm" id="college" placeholder="enter college name" value="">
+                  </div>
+                  <div class="form-group">
+                    <label for="batch">Batch</label>
+                    <input name="batch"  type="input" class="form-control form-control-sm" id="batch" placeholder="enter batch" value="">
                   </div>
                   
                     <div class="form-check">
@@ -61,15 +65,40 @@
             </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button onclick="addStudent('student-add-form-submit')" type="button" class="btn btn-primary student-edit-submit">Save changes edit</button>
+          <button id="student-add-form-close-btn" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button onclick="addNewStudent('student-add-form-submit','student-add-form-close-btn')" type="button" class="btn btn-primary student-edit-submit">add student modal</button>
         </div>
       </div>
     </div>
   </div>
 
-<script>   
-  function addStudent(a) {   
-     document.getElementById(a).submit();
+<script>
+    console.log("add-form-loaded");
+    function addNewStudent(formId, closeBtnId){   
+    console.log("reached student add form");
+    let studentAddForm = $('#'+formId); 
+    console.log('studentAddForm',studentAddForm);
+    document.getElementById(closeBtnId).click();
+    console.log('studentAddForm.serialize()',studentAddForm.serialize());
+  
+
+    $.ajax({
+      type: 'post',
+      url: '/student/create',
+      data: studentAddForm.serialize(),
+      success: function (data) {
+          console.log('reasched inside jquery');
+          // console.log('data.data.html',data.data.html)
+          let html = data.data.html;
+          console.log('typeof(html)',typeof(html));
+          // document.getElementById('student-details-ul-container').appendChild(html);
+          console.log(document.getElementById('student-details-ul-container'));
+          document.getElementById('student-details-ul-container').insertAdjacentHTML('beforeend', html);
+      }, error: function (error) {
+          console.log(error.responseText);
+      }
+  });
+
 }
-</script>   
+  </script>
+  

@@ -1,38 +1,50 @@
 const Student = require('../model/student');
 const studentInterview = require('../model/student_interview');
 const company = require('../model/company');
+const ejs = require("ejs");
 
-module.exports.createStudent = function(req, res){
-    let temp = req.body;
-    console.log(temp);
-    let obj = {
-        name: temp.name,
-        phone: temp.phone,
-        email: temp.email,
-        college: temp.college,
-        batch: temp.batch,
-        status: temp.status,
-        dsaScore: temp.dsaScore,
-        webDevelopmentScore: temp.webDevelopmentScore,
-        reactScore: temp.reactScore
+
+module.exports.createStudent =async function(req, res){
+    try{
+    console.log('value of req',req.body);    
+    let obj = req.body;
+    console.log('objvalue',req.body);
+    let addedStudent = await Student.create(obj);
+    let student_list = await Student.find({})
+        .populate({
+            path: 'interviews',
+            populate: {
+                path: 'companyId'
+            }
+        });
+
+     let html = await ejs.renderFile(__dirname +'../../views/student_details_list.ejs',{
+            title: "Placement Cell",
+            i : addedStudent
+     }); 
+     console.log('req.xhr',req.xhr);
+
+     if(req.xhr){
+        console.log('inside shr');
+        return res.status(200).json({
+            data: {
+                html: html
+            },
+            message: "addedCompanyRecord!"
+        });
+     }   
+    }catch(err){
+        console.log('error in createStudent controller');
+        console.log(err);
     }
-
-    Student.create(obj , function(err, newStudent){
-        if(err){
-            console.log('Error in creating a Student')
-            return;
-        }
-            console.log('******', newStudent);
-            return res.redirect('back');
-    });
 }
 
 
-module.exports.deleteStudent = function(req, res){
-    let id= req.query.id;
-    console.log('id',id);
-    Student.findByIdAndDelete(id, function(err){
-        if(err){
+module.exports.deleteStudent = function (req, res) {
+    let id = req.query.id;
+    console.log('id', id);
+    Student.findByIdAndDelete(id, function (err) {
+        if (err) {
             console.log('error in deleting record')
             // console.log(err);
         }
@@ -40,88 +52,44 @@ module.exports.deleteStudent = function(req, res){
     });
 }
 
-module.exports.updateStudent = function(req, res){
-    console.log('the data to update is ', req.body);
-    let id= req.body.id;
-    console.log('id',id);
-    Student.findByIdAndUpdate(id, req.body ,function(err){
-        if(err){
-            console.log('error in deleting record')
-            // console.log(err);
-        }
-        return res.redirect('back');
-    });
-}
+module.exports.updateStudent =async function (req, res) {
+    // console.log('the data to update is ', req.body);
+    // let id = req.body.id;
+    // console.log('id', id);
+    // Student.findByIdAndUpdate(id, req.body, function (err) {
+    //     if (err) {
+    //         console.log('error in deleting record')
+    //         // console.log(err);
+    //     }
+    //     return res.redirect('back');
+    // });
 
-module.exports.addInterview = async function(req, res){
-    console.log('zz',req.body);
-    let companyId = req.body.company;
-    let companyObj = await company.findById(companyId);
-    let companyName = companyObj.companyName;
-    req.body.companyName = companyName;
-    console.log('req.body.companyName ',req.body.companyName );
-    let studentId = req.body.student;
-    studentInterview.create(req.body, function(err, addedInterview){
-        if(err){
-            console.log('Error in creating a Student');
-            console.log(err);
-            return;
-        }
-            console.log('******', addedInterview); 
-            console.log('******', addedInterview._id);
-            Student.findByIdAndUpdate(studentId,{$push:{interviews : addedInterview._id}}, function(err, updatedStudent){
-                if(err){
-                    console.log('error in adding intervies list to student');
-                    console.log(err);
-                }
-                if (req.xhr){
-                    return res.status(200).json({
-                        data: {
-                            addedInterview: addedInterview
-                        },
-                        message: "Post created!"
-                    });
-                }
-                return res.redirect('back');
-            });
-    });
-}
-
-module.exports.deleteInterview = async function(req, res){
-    let id= req.query.id;
-    console.log('id',id);
-    studentInterview.findByIdAndDelete(id, function(err, deletedInterview){
-        if(err){
-            console.log('error in deleting record')
-            // console.log(err);
-        }
-        if(req.xhr){
+    try{
+        console.log('value of req',req.body);    
+        let obj = req.body;
+        let studentId = req.body.id;
+        console.log('objvalue',req.body);
+        let modifiedStudent = await Student.findByIdAndUpdate(studentId, obj);
+        modifiedStudent = await Student.findById(studentId);
+    
+         let html = await ejs.renderFile(__dirname +'../../views/student_details_list.ejs',{
+                title: "Placement Cell",
+                i : modifiedStudent
+         }); 
+         console.log('req.xhr',req.xhr);
+    
+         if(req.xhr){
+            console.log('inside shr');
             return res.status(200).json({
                 data: {
-                    deletedInterview: deletedInterview
+                    html: html
                 },
-                message: "interview Sheduled deleted!"
+                message: "modifiedStudentRecord!"
             });
-        }
-        return res.redirect('back');
-    });
-}
-
-module.exports.editInterview = async function(req, res){
-    console.log('reachededit-interview');
-    let interviewId = req.body.interviewId;
-    studentInterview.findByIdAndUpdate(interviewId, req.body, function(err, updatedRecord){
-        if(err){
-            console.log('error in updating student sheduled interview')
+         }   
+        }catch(err){
+            console.log('error in updateStudent controller');
             console.log(err);
         }
-        if(req.xhr){
-            return res.status(200).json({
-                data: {
-                    updatedRecord: updatedRecord
-                },
-                message: "interview modified updated!"
-            });
-        }
-    });
+
 }

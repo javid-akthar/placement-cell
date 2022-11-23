@@ -14,7 +14,7 @@
             <% for(k of company.students){ %>
                 <tr>
                     <th scope="row"><%= count %></th>
-                    <td><%= k.studentName %></td>
+                    <td><%= k.studentId.name %></td>
                     <td><%= k.profile %></td>
                     <td><%= k.result %></td>
                     <td><%- include('update_sheduled_interview', {k, company, student_list}); %> </td>
