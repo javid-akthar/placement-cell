@@ -6,8 +6,10 @@ console.log('router loaded');
 
 router.get('/',passport.checkAuthentication, homeController.home);
 router.use('/users',require('./users'));
-router.use('/student',require('./student'));
-router.use('/company',require('./company'));
+router.use('/student',passport.checkAuthentication,require('./student'));
+router.use('/company',passport.checkAuthentication,require('./company'));
+router.use("/csv", passport.checkAuthentication, require("./csv"));
+router.use("/job", passport.checkAuthentication, require("./job"));
 // router.use('/company',require('./company'));
 
 module.exports = router;

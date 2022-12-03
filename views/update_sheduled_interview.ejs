@@ -17,17 +17,17 @@
             <div class="edit-sheduled-interview-modal-body<%= k._id %>" style="font-size:16px;">
                 <form id="edit-shedule-interview-form<%= k._id %>" method="POST" class="sign-in-form">
                     <div class="form-group">
-                        <label for="profile">Profile</label>
-                        <input name="profile" type="input" class="form-control form-control-sm" id="profile"
+                        <label class="required" for="profile">Profile</label>
+                        <input required name="profile" type="input" class="form-control form-control-sm" id="profile"
                             placeholder="enter Profile" value="<%= k.profile %>" autocomplete="off">
                     </div>
-                    <label for="student">Student</br><small>*if student doesnt appear here pls add student and shedule
+                    <label class="required" for="student">Student</br><small>*if student doesnt appear here pls add student and shedule
                             interview</small></label>
 
-                    <select name="studentId" class="form-select" aria-label="Default select example" id="student">
-                        <option selected>Open this select menu</option>
+                    <select required name="studentId" class="form-select" aria-label="Default select example" id="student">
+                        <option value="" selected>Open this select menu</option>
                         <% for(s of student_list){ %>
-                            <% if(k.studentId.equals(s._id)){ %>
+                            <% if(k.studentId._id.equals(s._id)){ %>
                                 <option value="<%= s._id %>" selected>
                                     <%= s.name %>
                                 </option>
@@ -41,7 +41,6 @@
                     <br>
                     <label for="result">Result</label>
                     <select name="result" class="form-select" aria-label="Default select example" id="result">
-                        <!-- <option selected>Open this select menu</option> -->
                         <% if(k.result=="PASS"){ %>
                             <option value="PASS" selected>PASS</option>    
                         <% }else{ %>  

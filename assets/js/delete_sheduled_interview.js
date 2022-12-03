@@ -14,6 +14,8 @@ function deleteSheduledInterview(deletableRecord, companyId, studentId){
         // rederableTable.innerHTML = newTable(updatedData);
         console.log('data.data.html',data.data.html)
         rederableTable.innerHTML = data.data.html;
+        toastr.options.timeOut = 1500;
+        toastr.warning('Inerview Sheduled deleted');
     }, error: function (error) {
         console.log(error.responseText);
     }

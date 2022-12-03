@@ -1,19 +1,28 @@
 <!-- {company, student_list} -->
-<div class="accordion" id="accordionExample" style="padding: 0px 3%;">
+<div class="accordion" id="company-accordian<%= company._id %>" style="padding: 0px 3%;">
   <div class="card">
     <div class="card-header" id="headingOne">
-      <h2 class="mb-0">
-            <button class="btn btn-link" type="button" data-toggle="collapse"
-              data-target="#collapseOne<%= company._id %>" aria-expanded="false" aria-controls="collapseOne">
-              Collapsible Group Item #1 <i class="fa-regular fa-square-caret-down"
+      <h2 class="mb-0" style = "display: flex; justify-content: space-between;">
+        <span>
+          <%= company.companyName %>
+        </span>
+            <div style = "display: flex;
+            align-content: center;
+             justify-content: flex-end;">
+             <%- include('company_update', company) %>
+             <%- include('company_delete', company) %>
+            <button onclick="toggle('student-details-toggle<%= company._id %>')" class="btn btn-link" type="button" data-toggle="collapse"
+              data-target="#companyCollapse<%= company._id %>" aria-expanded="false" aria-controls="collapseOne">
+              Show Company Details <i class="fa-regular fa-square-caret-down"
                 id="student-details-toggle<%= company._id %>"
                 onclick="toggle('student-details-toggle<%= company._id %>')"></i>
             </button>
+            
       </h2>
     </div>
 
-    <div id="collapseOne<%= company._id %>" class="collapse" aria-labelledby="headingOne"
-      data-parent="#accordionExample">
+    <div id="companyCollapse<%= company._id %>" class="collapse" aria-labelledby="headingOne"
+      data-parent="#company-accordian<%= company._id %>">
       <div class="card-body">
          <%- include('company_interview_table', company) %>
          <%- include('shedule_interview_modal', {company, student_list}); %>
@@ -23,4 +32,3 @@
   </div>
 </div>
 
-<script type="text/javascript" src="/js/accordian.js"></script>

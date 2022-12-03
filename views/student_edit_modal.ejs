@@ -1,126 +1,102 @@
 <!-- Button trigger modal -->
-<button   type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenterEdit<%= i._id %>">
-    Edit student details
-  </button>
-  
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModalCenterEdit<%= i._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body" style="font-size:16px;">
-            <form id="student-edit-form-submit<%= i._id %>" action="/student/update" method="POST" class="sign-in-form">
+<button style="margin: 0px 10px;" type="button" class="btn btn-primary" data-toggle="modal"
+  data-target="#exampleModalCenterEdit<%= i._id %>">
+  Edit student details
+</button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenterEdit<%= i._id %>" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="font-size:16px;">
+        <form id="student-edit-form-submit<%= i._id %>" action="/student/update" method="POST" class="sign-in-form">
+          <div class="form-group">
+            <label class="required" for="inputName">Name</label>
+            <input required name="name" type="name" class="form-control form-control-sm" id="inputName"
+              aria-describedby="emailHelp" placeholder="Enter name" value="<%= i.name %>">
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input name="phone" type="input" class="form-control form-control-sm" id="phone"
+              placeholder="enter phone number" value="<%= i.phone %>">
+          </div>
+          <div class="form-group">
+            <label class="required" for="email">Email</label>
+            <input required name="email" patter="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,63}$" type="email"
+              class="form-control form-control-sm" id="email" placeholder="enter email" value="<%= i.email %>">
+          </div>
+          <div class="form-group">
+            <label for="college">College</label>
+            <input name="college" type="input" class="form-control form-control-sm" id="college"
+              placeholder="enter college name" value="<%= i.college %>">
+          </div>
+          <div class="form-group">
+            <label for="batch">Batch</label>
+            <input name="batch" type="input" class="form-control form-control-sm" id="batch" placeholder="enter batch"
+              value="<%= i.batch %>">
+          </div>
+          <% if(i.status=="placed" ){ %>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="status" id="exampleRadios1" value="Placed" checked>
+              <label class="form-check-label" for="exampleRadios1">
+                Placed
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="status" id="exampleRadios2" value="Not Placed">
+              <label class="form-check-label" for="exampleRadios2">
+                Not Placed
+              </label>
+            </div>
+            <% }else{ %>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="status" id="exampleRadios1" value="Placed">
+                <label class="form-check-label" for="exampleRadios1">
+                  Placed
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="status" id="exampleRadios2" value="Not Placed"
+                  checked>
+                <label class="form-check-label" for="exampleRadios2">
+                  Not Placed
+                </label>
+              </div>
+              <% } %>
+                <br>
                 <div class="form-group">
-                  <label for="inputName">Name</label>
-                  <input name="name"  type="name" class="form-control form-control-sm" id="inputName" aria-describedby="emailHelp" placeholder="Enter name" value="<%= i.name %>">
+                  <label for="dsaScore">dsaScore</label>
+                  <input min="0" max="100" name="dsaScore" type="number" class="form-control form-control-sm"
+                    id="dsaScore" placeholder="enter dsaScore" value="<%= i.dsaScore %>">
                 </div>
                 <div class="form-group">
-                  <label for="phone">Phone</label>
-                  <input name="phone"  type="input" class="form-control form-control-sm" id="phone" placeholder="enter phone number" value="<%= i.phone %>">
+                  <label for="webDevelopmentScore">webDevScore</label>
+                  <input min="0" max="100" name="webDevelopmentScore" type="number" class="form-control form-control-sm"
+                    id="webDevelopmentScore" placeholder="enter webDevelopmentScore"
+                    value="<%= i.webDevelopmentScore %>">
                 </div>
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input name="email"  type="email" class="form-control form-control-sm" id="email" placeholder="enter email" value="<%= i.email %>">
-                  </div>
-                  <div class="form-group">
-                    <label for="college">College</label>
-                    <input name="college"  type="input" class="form-control form-control-sm" id="college" placeholder="enter college name" value="<%= i.college %>">
-                  </div>
-                  <div class="form-group">
-                    <label for="batch">Batch</label>
-                    <input name="batch"  type="input" class="form-control form-control-sm" id="batch" placeholder="enter batch" value="<%= i.batch %>">
-                  </div>
-                  <% if(i.status == "placed"){ %>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="status" id="exampleRadios1" value="option1" checked>
-                      <label class="form-check-label" for="exampleRadios1">
-                        Placed
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="status" id="exampleRadios2" value="option2">
-                      <label class="form-check-label" for="exampleRadios2">
-                        Not Placed
-                      </label>
-                    </div>
-                  <% }else{ %>  
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="status" id="exampleRadios1" value="option1">
-                      <label class="form-check-label" for="exampleRadios1">
-                        Placed
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="status" id="exampleRadios2" value="option2" checked>
-                      <label class="form-check-label" for="exampleRadios2">
-                        Not Placed
-                      </label>
-                    </div>
-                  <% } %>  
-                  <br>
-                  <div class="form-group">
-                    <label for="dsaScore">dsaScore</label>
-                    <input name="dsaScore"  type="input" class="form-control form-control-sm" id="dsaScore" placeholder="enter dsaScore" value="<%= i.dsaScore %>">
-                  </div>
-                  <div class="form-group">
-                    <label for="webDevelopmentScore">webDevScore</label>
-                    <input name="webDevelopmentScore"  type="input" class="form-control form-control-sm" id="webDevelopmentScore" placeholder="enter webDevelopmentScore" value="<%= i.webDevelopmentScore %>">
-                  </div>
-                  <div class="form-group">
-                    <label for="reactScore">reactScore</label>
-                    <input name="reactScore"  type="input" class="form-control form-control-sm" id="reactScore" placeholder="enter reactScore" value="<%= i.reactScore %>">
-                  </div>
-                  <input type="hidden" name="id" value="<%= i._id %>">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
-        <div class="modal-footer">
-          <button id="student-details-edit-close-btn<%= i._id %>" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button onclick="studentEdit('student-edit-form-submit<%= i._id %>','student-details-edit-close-btn<%= i._id %>','student-details-list<%= i._id %>', 'collapseOne<%= i._id %>')" type="button" class="btn btn-primary student-edit-submit" id="studentEditSubmit<%= i._id %>" >Save changes edit</button>
-        </div>
+                  <label for="reactScore">reactScore</label>
+                  <input min="0" max="100" name="reactScore" type="number" class="form-control form-control-sm"
+                    id="reactScore" placeholder="enter reactScore" value="<%= i.reactScore %>">
+                </div>
+                <input type="hidden" name="id" value="<%= i._id %>">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button id="student-details-edit-close-btn<%= i._id %>" type="button" class="btn btn-secondary"
+          data-dismiss="modal">Close</button>
+        <button
+          onclick="studentEdit('student-edit-form-submit<%= i._id %>','student-details-edit-close-btn<%= i._id %>','student-details-list<%= i._id %>', 'collapseOne<%= i._id %>')"
+          type="button" class="btn btn-primary student-edit-submit" id="studentEditSubmit<%= i._id %>">Save changes
+          edit</button>
       </div>
     </div>
   </div>
-
-<script>   
-    console.log("add-form-loaded");
-    function studentEdit(formId, closeBtnId, listId, collapseDivId){   
-    console.log("reached student add form");
-    let studentAddForm = $('#'+formId); 
-    console.log('studentAddForm',studentAddForm);
-    document.getElementById(closeBtnId).click();
-    $('.modal-backdrop').remove();
-    console.log('studentAddForm.serialize()',studentAddForm.serialize());
-    let addShowClass = false;
-    if($('#'+collapseDivId).hasClass("show")){
-      addShowClass= true;
-    }
-    $.ajax({
-      type: 'post',
-      url: '/student/update',
-      data: studentAddForm.serialize(),
-      success: function (data) {
-          console.log('reasched inside jquery');
-          let html = data.data.html;
-          // html = $.parseHTML(html),
-          console.log('typeof(html)',typeof(html));
-          // console.log('typeof(listNode)',typeof(listNode));
-          // listNode.parentNode.replaceChild(html, listNode);
-          // id="collapseOne<%= i._id %>"
-          
-          $('#'+listId).replaceWith(html);
-          if(addShowClass){
-            $('#'+collapseDivId).addClass("show");
-          }
-      }, error: function (error) {
-          console.log(error.responseText);
-      }
-  });
-
-}
-</script>   
+</div>

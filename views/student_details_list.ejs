@@ -2,17 +2,23 @@
     <div class="accordion" id="accordionExample" style="padding: 0px 3%;">
       <div class="card">
         <div class="card-header" id="headingOne">
-          <h2 class="mb-0">
+          <h2 class="mb-0" style = "display: flex; justify-content: space-between;">
             <span>
               <%= i.name %>
             </span>
-            <%- include('student_edit_modal',{i} ); %>
-                  <button class="btn btn-link" type="button" data-toggle="collapse"
-                  data-target="#collapseOne<%= i._id %>" aria-expanded="false" aria-controls="collapseOne">
-                  Collapsible Group Item #1 <i class="fa-regular fa-square-caret-down"
-                  id="student-details-toggle<%= i._id %>"
-                  onclick="toggle('student-details-toggle<%= i._id %>')"></i>
-            </button>
+            <div style = "display: flex;
+            align-content: center;
+            justify-content: flex-end;">
+               <%- include('student_edit_modal',{i} ); %>
+               <%- include('student_delete',{i} ); %>
+                     <button onclick="toggle('student-details-toggle<%= i._id %>')" class="btn btn-link" type="button" data-toggle="collapse"
+                     data-target="#collapseOne<%= i._id %>" aria-expanded="false" aria-controls="collapseOne">
+                     Show Student Details<i class="fa-regular fa-square-caret-down"
+                     id="student-details-toggle<%= i._id %>"
+                     onclick="toggle('student-details-toggle<%= i._id %>')"></i>
+               </button>
+            </div>
+           
           </h2>
         </div>
         <div id="collapseOne<%= i._id %>" class="collapse" aria-labelledby="headingOne"
@@ -82,11 +88,7 @@
                 </tr>
               </tbody>
             </table>
-            <div class="delete-button">
-              <a href="/student/delete?id=<%= i._id %>">
-                delete
-              </a>
-            </div>
+           
             <%- include('student_interview_table', {i}) %>
           </div>
         </div>

@@ -2,16 +2,137 @@ const Company = require('../model/company');
 const Student = require('../model/student');
 const Interview = require('../model/student_interview');
 const ejs = require('ejs');
+// var jsdom = require("jsdom").jsdom;
+// const dom = new jsdom(data);
+// var  jquery = require('jquery');
+// var $ = require('jquery');
+// const $ = jquery(dom.window);
+// var jsdom = require('jsdom');
+// $ = require('jquery')(new jsdom.JSDOM().window);
+const toastr = require('toastr');
 
-module.exports.createCompany = function (req, res) {
+module.exports.createCompany = async function (req, res) {
     Company.create(req.body, function (err, newCompany) {
         if (err) {
             console.log('Error in creating a Company')
             return;
+        } else {
+            req.flash('success', 'Company Added');
+            console.log('******', newCompany);
+            return res.redirect('back');
         }
-        console.log('******', newCompany);
-        return res.redirect('back');
+
     });
+
+
+
+    // try{
+    //      newCompany = await Company.create(req.body);
+    //     let addedCompany = await Company.findById(newCompany._id)
+    //     // .populate({
+    //     //     path: 'students',
+    //     //     populate: {
+    //     //         path: 'studentId'
+    //     //     }
+    //     // });
+    //     let student_list = await Student.find({})
+    //     .populate({
+    //       path: 'interviews',
+    //       populate: {
+    //          path: 'companyId'
+    //       }
+    //       });
+
+    //     let html = await ejs.renderFile(__dirname +'../../views/company_accordian.ejs',{
+    //         company: addedCompany,
+    //         student_list: student_list
+    //     }); 
+    //     console.log('req.xhr',req.xhr);
+
+    //     if(req.xhr){
+    //         console.log('inside shr');
+    //         // new Toast("Welcome!");
+    //         // req.flash('success', 'user created')
+    //         return res.status(200).json({
+    //             data: {
+    //                 html: html
+    //             },
+    //             message: "addedCompanyRecord!"
+    //         });
+    //      } 
+    // }catch(err){
+    //     console.log('error in companyAdd controller');
+    //     console.log(err);
+    // }
+}
+
+module.exports.updateCompany = async function (req, res) {
+    try {
+        console.log('reached updatedCompany')
+        let companyId = req.body.companyId;
+        let newObj = req.body;
+        await Company.findByIdAndUpdate(companyId, newObj);
+        let updatedCompany = await Company.findById(companyId)
+            .populate({
+                path: 'students',
+                populate: {
+                    path: 'studentId'
+                }
+            });
+        let student_list = await Student.find({});
+        let html = await ejs.renderFile(__dirname + '../../views/company_accordian.ejs', {
+            title: "Placement Cell",
+            company: updatedCompany,
+            student_list
+        });
+        console.log('value of html', html);
+        if (req.xhr) {
+            return res.status(200).json({
+                data: {
+                    html: html
+                },
+                message: "updatedCompanyRecord!"
+            });
+        }
+    } catch (err) {
+        console.log('error in updateComapny controller');
+        console.log(err);
+        // req.flash('error', );
+        // return res.redirect('/company');
+    }
+
+}
+
+module.exports.deleteCompany = async function (req, res) {
+    console.log('reached deleteC0mpany')
+    console.log(req.query);
+    console.log(req.body);
+    try {
+        let deletableCompanyId = req.query.deletableCompanyId;
+        console.log('deletableCompanyId', deletableCompanyId);
+        let deletableCompanyRecord = await Company.findByIdAndDelete(deletableCompanyId);
+        if (deletableCompanyRecord.students) {
+            for (student of deletableCompanyRecord.students) {
+                let removedInterviewRecord = await Interview.findByIdAndDelete(student);
+                let modifyRequiredStudentRecord = removedInterviewRecord.studentId;
+                console.log('modifyRequiredStudentRecord', modifyRequiredStudentRecord);
+                await Student.findByIdAndUpdate(modifyRequiredStudentRecord, { $pull: { interviews: removedInterviewRecord._id } });
+            }
+        }
+        let status = true;
+        if (req.xhr) {
+            return res.status(200).json({
+                data: {
+                    status: status
+                },
+                message: "addedCompanyRecord!"
+            });
+        }
+    } catch (err) {
+        console.log('error in deleteComapny controller');
+        console.log(err);
+    }
+
 }
 
 
@@ -19,16 +140,14 @@ module.exports.createCompany = function (req, res) {
 module.exports.showComapny = async function (req, res) {
     try {
         let company_list = await Company.find({})
-        .populate({
-            path: 'students',
-            populate: {
-                path: 'studentId'
-            }
-        });
+            .populate({
+                path: 'students',
+                populate: {
+                    path: 'studentId'
+                }
+            });
 
-   
-
-        console.log('company_list',company_list);
+        console.log('company_list', company_list);
         console.log(company_list.students);
         // console.log(company_list.students[0].studentId.name);
         let student_list = await Student.find({});
@@ -44,92 +163,162 @@ module.exports.showComapny = async function (req, res) {
 
 }
 
-module.exports.sheduleInterview =async function(req, res){
-    let studentId = req.body.studentId;
-    let studentName =await Student.findById(studentId);
-    studentName = studentName.name;
-    req.body.studentName = studentName;
-    let createdInterview =await Interview.create(req.body);
-    console.log('createdInterview',createdInterview);
-    let companyId = createdInterview.companyId;
-    console.log('companyId',companyId);
-    let modifiedCompanyRecord =await Company.findByIdAndUpdate(companyId, {$push:{students : createdInterview._id}} ).populate('students');
-    modifiedCompanyRecord = await Company.findById(companyId).populate('students');
-    await Student.findByIdAndUpdate(studentId, {$push: {interviews: createdInterview._id}}) ;
-    console.log('modifiedCompanyRecord',modifiedCompanyRecord);
-    let student_list = await Student.find({});
-    let html = await ejs.renderFile(__dirname +'../../views/demo.ejs',{
-        title: "Placement Cell",
-        company: modifiedCompanyRecord,
-        student_list
-    });
-    console.log('value of html',html);
-    if(req.xhr){
-        return res.status(200).json({
-            data: {
-                modifiedCompanyRecord: modifiedCompanyRecord,
-                html
-            },
-            message: "addedCompanyRecord!"
+module.exports.sheduleInterview = async function (req, res) {
+    try {
+        let studentId = req.body.studentId;
+        console.log('studentIdvalue', studentId);
+        if (!studentId) {
+            return res.status(400).json({
+                message: "not able to shedule Interview!",
+                error: "Ple select valid value for student"
+            });
+        }
+        let createdInterview = await Interview.create(req.body);
+        console.log('createdInterview', createdInterview);
+        let companyId = createdInterview.companyId;
+        console.log('companyId', companyId);
+        let modifiedCompanyRecord = await Company.findByIdAndUpdate(companyId, { $push: { students: createdInterview._id } });
+        modifiedCompanyRecord = await Company.findById(companyId)
+            .populate({
+                path: 'students',
+                populate: {
+                    path: 'studentId'
+                }
+            });
+        await Student.findByIdAndUpdate(studentId, { $push: { interviews: createdInterview._id } });
+        console.log('modifiedCompanyRecord', modifiedCompanyRecord);
+        let student_list = await Student.find({});
+        let html = await ejs.renderFile(__dirname + '../../views/sheduled_interview_table_data.ejs', {
+            title: "Placement Cell",
+            company: modifiedCompanyRecord,
+            student_list
         });
+        console.log('value of html', html);
+        if (req.xhr) {
+            return res.status(200).json({
+                data: {
+                    modifiedCompanyRecord: modifiedCompanyRecord,
+                    html
+                },
+                message: "addedCompanyRecord!"
+            });
+        }
+    } catch (err) {
+        try {
+            console.log(err);
+            console.log('error in interview shedule controller');
+            let errorObj = "";
+            for (errorObj in err["errors"]) {
+                console.log(errorObj);
+            }
+            return res.status(400).json({
+                message: "not able to shedule Interview!",
+                error: err["errors"][errorObj]["properties"]["message"]
+            });
+        } catch (err) {
+            console.log("error in shedule Interivew Controller");
+            console.log(err);
+        }
+
     }
 }
 
 
-module.exports.updateSheduledInterview =async function(req, res){
-    console.log("reached updateSheduledInterview");
-    console.log('req.body',req.body)
-    let interviewId = req.body.interviewId;
-    let companyId = req.body.companyId;
-    await Interview.findByIdAndUpdate(interviewId, req.body);
-    let modifiedCompanyRecord = await Company.findById(companyId).populate('students');
-    console.log('modifiedCompanyRecord',modifiedCompanyRecord);
-    let student_list = await Student.find({});
-    let html = await ejs.renderFile(__dirname +'../../views/demo.ejs',{
-        title: "Placement Cell",
-        company: modifiedCompanyRecord,
-        student_list
-    });
-    console.log('value of html',html);
-    if(req.xhr){
-        return res.status(200).json({
-            data: {
-                modifiedCompanyRecord: modifiedCompanyRecord,
-                html
-            },
-            message: "modifiedCompanyRecord!"
+module.exports.updateSheduledInterview = async function (req, res) {
+    try {
+        let studentId = req.body.studentId;
+        console.log('studentIdvalue', studentId);
+        if (!studentId) {
+            return res.status(400).json({
+                message: "not able to shedule Interview!",
+                error: "Ple select valid value for student"
+            });
+        }
+        console.log("reached updateSheduledInterview");
+        console.log('req.body', req.body)
+        let interviewId = req.body.interviewId;
+        let companyId = req.body.companyId;
+        await Interview.findByIdAndUpdate(interviewId, req.body);
+        let modifiedCompanyRecord = await Company.findById(companyId)
+            .populate({
+                path: 'students',
+                populate: {
+                    path: 'studentId'
+                }
+            });
+        console.log('modifiedCompanyRecord', modifiedCompanyRecord);
+        let student_list = await Student.find({});
+        let html = await ejs.renderFile(__dirname + '../../views/sheduled_interview_table_data.ejs', {
+            title: "Placement Cell",
+            company: modifiedCompanyRecord,
+            student_list
         });
+        console.log('value of html', html);
+        if (req.xhr) {
+            return res.status(200).json({
+                data: {
+                    modifiedCompanyRecord: modifiedCompanyRecord,
+                    html
+                },
+                message: "modifiedCompanyRecord!"
+            });
+        }
+    } catch (err) {
+        try{
+            console.log(err);
+            console.log('error in updateSheduledInterview controller');
+            let errorObj = "";
+            for (errorObj in err["errors"]) {
+                console.log(errorObj);
+            }
+            return res.status(400).json({
+                message: "not able to update sheduledInterview!",
+                error: err["errors"][errorObj]["properties"]["message"]
+            });
+        }catch(err){
+            console.log(err);
+        }
     }
-
 }
 
-module.exports.deleteSheduledInterview =async function(req, res){
-    console.log("reached deleteSheduledInterview");
-    console.log('req.body',req.body);
-    console.log('req.query.interviewId',req.query.interviewId);
-    let interviewId = req.query.interviewId;
-    let companyId = req.query.companyId;
-    await Interview.findByIdAndRemove(interviewId);
-    let companyRecord = await Company.findByIdAndUpdate(companyId, {$pull: {students : companyId}});
-    let modifiedCompanyRecord = await Company.findById(companyId).populate('students');
-    let studentId = req.query.studentId;
-    await Student.findByIdAndUpdate(studentId, {$push: {interviews: createdInterview._id}}) ;
-    console.log(modifiedCompanyRecord);
-    console.log('modifiedCompanyRecord',modifiedCompanyRecord);
-    let student_list = await Student.find({});
-    let html = await ejs.renderFile(__dirname +'../../views/demo.ejs',{
-        title: "Placement Cell",
-        company: modifiedCompanyRecord,
-        student_list
-    });
-    console.log('value of html',html);
-    if(req.xhr){
-        return res.status(200).json({
-            data: {
-                modifiedCompanyRecord: modifiedCompanyRecord,
-                html
-            },
-            message: "modifiedCompanyRecord!"
+module.exports.deleteSheduledInterview = async function (req, res) {
+    try {
+        console.log("reached deleteSheduledInterview");
+        console.log('req.body', req.body);
+        console.log('req.query.interviewId', req.query.interviewId);
+        let interviewId = req.query.interviewId;
+        let companyId = req.query.companyId;
+        await Interview.findByIdAndRemove(interviewId);
+        let companyRecord = await Company.findByIdAndUpdate(companyId, { $pull: { students: interviewId } });
+        let modifiedCompanyRecord = await Company.findById(companyId)
+            .populate({
+                path: 'students',
+                populate: {
+                    path: 'studentId'
+                }
+            });
+        let studentId = req.query.studentId;
+        await Student.findByIdAndUpdate(studentId, { $push: { interviews: interviewId } });
+        console.log(modifiedCompanyRecord);
+        console.log('modifiedCompanyRecord', modifiedCompanyRecord);
+        let student_list = await Student.find({});
+        let html = await ejs.renderFile(__dirname + '../../views/sheduled_interview_table_data.ejs', {
+            title: "Placement Cell",
+            company: modifiedCompanyRecord,
+            student_list
         });
+        console.log('value of html', html);
+        if (req.xhr) {
+            return res.status(200).json({
+                data: {
+                    modifiedCompanyRecord: modifiedCompanyRecord,
+                    html
+                },
+                message: "modifiedCompanyRecord!"
+            });
+        }
+    } catch (err) {
+        console.log(err);
+        console.log('error in deleteSheduledInterview controller');
     }
 }

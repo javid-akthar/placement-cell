@@ -9,10 +9,11 @@
     </thead>
     <tbody>
         <% count=1 %>
+        <!-- <% if(company.students != undefined){ %> -->
         <% for(k of company.students){ %>
             <tr>
                 <th scope="row"><%= count %></th>
-                <td><%= k.studentName %></td>
+                <td><%= k.studentId.name %></td>
                 <td><%= k.profile %></td>
                 <td><%= k.result %></td>
                 <td><%- include('update_sheduled_interview', {k, company, student_list}); %> </td>
@@ -20,5 +21,12 @@
             </tr>
         <% count = count+1 %>
         <% } %>
+        <% if(count==1){ %>
+            <tr>
+            <td colspan="5">No Student Sheduled for Interview</td>
+        </tr>
+          <% } %> 
+
+        <!-- <% } %>   -->
     </tbody>
 </table>

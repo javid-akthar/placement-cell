@@ -1,104 +1,85 @@
 <!-- Button trigger modal -->
-<button   type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenterAddStudent">
-    Add student
-  </button>
-  
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModalCenterAddStudent" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body" style="font-size:16px;">
-            <form id="student-add-form-submit"  method="POST" class="sign-in-form">
-                <div class="form-group">
-                  <label for="inputName">Name</label>
-                  <input name="name"  type="name" class="form-control form-control-sm" id="inputName" aria-describedby="emailHelp" placeholder="Enter name" value="">
-                </div>
-                <div class="form-group">
-                  <label for="phone">Phone</label>
-                  <input name="phone"  type="input" class="form-control form-control-sm" id="phone" placeholder="enter phone number" value="">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input name="email"  type="email" class="form-control form-control-sm" id="email" placeholder="enter email" value="">
-                  </div>
-                  <div class="form-group">
-                    <label for="college">College</label>
-                    <input name="college"  type="input" class="form-control form-control-sm" id="college" placeholder="enter college name" value="">
-                  </div>
-                  <div class="form-group">
-                    <label for="batch">Batch</label>
-                    <input name="batch"  type="input" class="form-control form-control-sm" id="batch" placeholder="enter batch" value="">
-                  </div>
-                  
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="status" id="exampleRadios1" value="option1" checked>
-                      <label class="form-check-label" for="exampleRadios1">
-                        Placed
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="status" id="exampleRadios2" value="option2" >
-                      <label class="form-check-label" for="exampleRadios2">
-                        Not Placed
-                      </label>
-                    </div>
-                  <br>
-                  <div class="form-group">
-                    <label for="dsaScore">dsaScore</label>
-                    <input name="dsaScore"  type="input" class="form-control form-control-sm" id="dsaScore" placeholder="enter dsaScore" value="">
-                  </div>
-                  <div class="form-group">
-                    <label for="webDevelopmentScore">webDevScore</label>
-                    <input name="webDevelopmentScore"  type="input" class="form-control form-control-sm" id="webDevelopmentScore" placeholder="enter webDevelopmentScore" value="">
-                  </div>
-                  <div class="form-group">
-                    <label for="reactScore">reactScore</label>
-                    <input name="reactScore"  type="input" class="form-control form-control-sm" id="reactScore" placeholder="enter reactScore" value="">
-                  </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
-        <div class="modal-footer">
-          <button id="student-add-form-close-btn" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button onclick="addNewStudent('student-add-form-submit','student-add-form-close-btn')" type="button" class="btn btn-primary student-edit-submit">add student modal</button>
-        </div>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenterAddStudent">
+  Add student
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenterAddStudent" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="font-size:16px;">
+        <form id="student-add-form-submit" method="POST" class="sign-in-form">
+          <div class="form-group">
+            <label class="required" for="inputName">Name</label>
+            <input required name="name" type="name" class="form-control form-control-sm" id="inputName"
+              aria-describedby="emailHelp" placeholder="Enter name" value="">
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input name="phone" type="input" class="form-control form-control-sm" id="phone"
+              placeholder="enter phone number" value="">
+          </div>
+          <div class="form-group">
+            <label class="required" for="email">Email</label>
+            <input required patter="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,63}$" name="email" type="email" class="form-control form-control-sm" id="email" placeholder="enter email"
+              value="">
+          </div>
+          <div class="form-group">
+            <label for="college">College</label>
+            <input name="college" type="input" class="form-control form-control-sm" id="college"
+              placeholder="enter college name" value="">
+          </div>
+          <div class="form-group">
+            <label for="batch">Batch</label>
+            <input name="batch" type="input" class="form-control form-control-sm" id="batch" placeholder="enter batch"
+              value="">
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="status" id="exampleRadios1" value="Placed" checked>
+            <label class="form-check-label" for="exampleRadios1">
+              Placed
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="status" id="exampleRadios2" value="Not Placed">
+            <label class="form-check-label" for="exampleRadios2">
+              Not Placed
+            </label>
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="dsaScore">dsaScore</label>
+            <input min="0" max="100" name="dsaScore" type="number" class="form-control form-control-sm" id="dsaScore"
+              placeholder="enter dsaScore" value="">
+          </div>
+          <div class="form-group">
+            <label for="webDevelopmentScore">webDevScore</label>
+            <input min="0" max="100" name="webDevelopmentScore" type="number" class="form-control form-control-sm" id="webDevelopmentScore"
+              placeholder="enter webDevelopmentScore" value="">
+          </div>
+          <div class="form-group">
+            <label for="reactScore">reactScore</label>
+            <input min="0" max="100" name="reactScore" type="number" class="form-control form-control-sm" id="reactScore"
+              placeholder="enter reactScore" value="">
+          </div>
+          
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button id="student-add-form-close-btn" type="button" class="btn btn-secondary"
+          data-dismiss="modal">Close</button>
+        <button onclick="addNewStudent('student-add-form-submit','student-add-form-close-btn')" type="button"
+          class="btn btn-primary student-edit-submit">add student modal</button>
       </div>
     </div>
   </div>
+</div>
 
-<script>
-    console.log("add-form-loaded");
-    function addNewStudent(formId, closeBtnId){   
-    console.log("reached student add form");
-    let studentAddForm = $('#'+formId); 
-    console.log('studentAddForm',studentAddForm);
-    document.getElementById(closeBtnId).click();
-    console.log('studentAddForm.serialize()',studentAddForm.serialize());
-  
-
-    $.ajax({
-      type: 'post',
-      url: '/student/create',
-      data: studentAddForm.serialize(),
-      success: function (data) {
-          console.log('reasched inside jquery');
-          // console.log('data.data.html',data.data.html)
-          let html = data.data.html;
-          console.log('typeof(html)',typeof(html));
-          // document.getElementById('student-details-ul-container').appendChild(html);
-          console.log(document.getElementById('student-details-ul-container'));
-          document.getElementById('student-details-ul-container').insertAdjacentHTML('beforeend', html);
-      }, error: function (error) {
-          console.log(error.responseText);
-      }
-  });
-
-}
-  </script>
-  

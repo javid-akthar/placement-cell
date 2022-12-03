@@ -5,26 +5,36 @@ const interviewSchema = new mongoose.Schema(
   {
     companyId: {
       type:  mongoose.Schema.Types.ObjectId,
-      ref: 'Company'
+      ref: 'Company',
+      required: true
     },studentId: {
       type:  mongoose.Schema.Types.ObjectId,
-      ref: 'Student'
+      ref: 'Student',
+      required: true
     },
     profile: {
       type: String,
       required: true,
+      trim: true
+
     },date: {
       type: Date,
       required: true,
+      trim: true
     },
     result: {
       type: String,
       enum: ["PASS", "FAIL", "On Hold", "Didn’t Attempt"],
+      trim: true,
+      required: true
     },companyName: {
       type: String,
       required: true,
+      trim: true,
+      required: true
     },studentName:{
       type: String,
+      trim: true
     }
   },
   {

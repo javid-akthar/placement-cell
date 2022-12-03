@@ -4,3 +4,16 @@ html{
     box-sizing: border-box;
 }
 
+.required label {
+    font-weight: bold;
+}
+.required label:after {
+    color: #e32;
+    content: ' *';
+    display:inline;
+}
+
+.required:after {
+    content:" *";
+    color: red;
+  }

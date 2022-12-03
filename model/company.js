@@ -4,10 +4,11 @@ const companySchema = new mongoose.Schema({
 
     companyName: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
     }
     ,date: {
-        type: Date,
+        type: String,
         required: true
     },students: [{
         type: mongoose.Schema.Types.ObjectId,

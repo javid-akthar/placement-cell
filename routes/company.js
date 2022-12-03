@@ -5,6 +5,8 @@ const passport = require('../config/passport-local-strategy');
 
 router.get('/', companyController.showComapny)
 router.post('/create', companyController.createCompany);
+router.get('/delete', companyController.deleteCompany);
+router.post('/update', companyController.updateCompany);
 router.post('/shedule-interview', companyController.sheduleInterview);
 // router.get('/delete/', companyController.deleteCompany);
 router.post('/edit-sheduled-interview', companyController.updateSheduledInterview);

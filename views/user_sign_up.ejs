@@ -1,21 +1,23 @@
 <h3 class="signing-header">Sign Up</h3>
 
-<form action="/users/create" method="POST" class="sign-in-form">
+
+<form action="/users/create" method="POST" class="sign-in-form" autocomplete="off">
     <div class="form-group">
-      <label for="InputName">Name</label>
-      <input name="name"  type="text" class="form-control" id="InputName" aria-describedby="name" placeholder="Enter name">
+      <label class="required" for="InputName">Name</label>
+      <input required name="name"  type="text" class="form-control" id="InputName" aria-describedby="name" placeholder="Enter name">
     </div>
     <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input name="email"  type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+        <label class="required" for="exampleInputEmail1">Email address</label>
+        <input required name="email" patter="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,63}$"  type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
       </div>
     <div class="form-group">
-      <label for="exampleInputPassword1">Password</label>
-      <input name="password"  type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      <label class="required" for="exampleInputPassword1">Password</label>
+      <input required name="password"  type="password"  class="form-control" id="exampleInputPassword1" placeholder="Password">
+      <!-- pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"  -->
     </div>
     <div class="form-group">
-        <label for="exampleConfirmPassword1">Password</label>
-        <input name="confirm_password"  type="password" class="form-control" id="exampleConfirmPassword1" placeholder="Confirm Password">
+        <label class="required" for="exampleConfirmPassword1">Password</label>
+        <input required name="confirm_password"  type="password" class="form-control" id="exampleConfirmPassword1" placeholder="Confirm Password">
       </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

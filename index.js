@@ -7,12 +7,16 @@ const app = express();
 const db = require('./config/mongoose');
 const Student = require('./model/student');
 const bodyParser = require('body-parser');
+const { check, validationResult } = require('express-validator')
 // used for session cookie
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
 const MongoStore = require('connect-mongodb-session')(session);
 const sassMiddleware =require('node-sass-middleware');
+// const { flash } = require('express-flash-message');
+const flash = require('connect-flash');
+const customMware = require('./config/middleware');
 
 app.use(sassMiddleware({
     src: './assets/scss',
@@ -29,6 +33,7 @@ app.set('layout extractScripts', true);
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static('assets'));
+// app.use("/static", express.static('./static/'));
 
 
 app.set('view engine', 'ejs');
@@ -59,8 +64,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(passport.setAuthenticatedUser);
-
+// app.use(flash({ sessionKeyName: 'flashMessage' }));
+app.use(flash());
+app.use(customMware.setFlash);
 app.use('/',require('./routes'));
+
 
 
 app.listen(port, function(err){

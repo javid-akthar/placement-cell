@@ -1,31 +1,40 @@
 <header class="navbar navbar-light" style="background-color: #e3f2fd;">
-    Page Header
-
+    <h3>Placement Cell Application</h3>
     <ul>
         <% if (locals.user){ %>
             <li>
-                    <a class="btn btn-primary" href="/company">Interview Page</a>
+                <a class="btn btn-primary" href="/company">Company Page</a>
             </li>
             <li>
+                <a class="btn btn-primary" class="btn btn-primary" href="/student">Student Page  </a>
+            </li>
+            <li>
+                <a class="btn btn-primary" href="/csv/download">Student Report<i
+                    class="fa-solid fa-download"></i></a>
+            </li>
+            <li>
+                <a class="btn btn-primary" href="/job" class="home-links btn btn-light mt-2">Find Interviews API  <i
+                   class="fa-solid fa-briefcase"></i></a>
+            </li>
+
+            <!-- <li>
                 <a href="/student">
                     <%= user.name %>
                 </a>
-            </li>
+            </li> -->
             <li>
-                    <a class="btn btn-primary" href="/users/sign-out">Sign Out</a>
+                <a class="btn btn-primary" href="/users/sign-out">Sign Out</a>
             </li>
-        <% }else{ %>
+            <% }else{ %>
 
-            <li>
-                <a href="/users/sign-in">Sign In</a>
-            </li>
+                <li>
+                    <a href="/users/sign-in">Sign In</a>
+                </li>
 
-            <li>
-                <a href="/users/sign-up">Sign Up</a>
-            </li>
-
-
-        <% } %>
+                <li>
+                    <a href="/users/sign-up">Sign Up</a>
+                </li>
+                <% } %>
     </ul>
-
+    
 </header>

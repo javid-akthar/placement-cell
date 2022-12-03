@@ -1,4 +1,5 @@
-function editsheduleInterview(formId, closeBtnId) {
+function sheduleInterview(formId, closeBtnId) {
+
     let formInputValidation = true;
     let formElements = $('#' + formId + " " + "input");
     for (inputElement of formElements) {
@@ -8,27 +9,30 @@ function editsheduleInterview(formId, closeBtnId) {
         }
     }
     if (formInputValidation) {
-        console.log('reached editsheduleInterview');
+        console.log('reached sheduleInterview');
         let formIdtemp = document.getElementById(formId);
         console.log(formIdtemp);
-        let editsheduledInterviewForm = $('#' + formId);
-        console.log('editsheduledInterviewForm', editsheduledInterviewForm);
-        console.log('editsheduledInterviewForm.serialize()', editsheduledInterviewForm.serialize());
+        let shedulingInterviewForm = $('#' + formId);
+        // console.log('typeof(shedulingInterviewForm',typeof(shedulingInterviewForm));
+        // console.log(shedulingInterviewForm.get(0));
+        console.log('shedulingInterviewForm', shedulingInterviewForm);
+        console.log('shedulingInterviewForm.serialize()', shedulingInterviewForm.serialize());
         document.getElementById(closeBtnId).click();
         $(".modal-backdrop").hide();
         $.ajax({
             type: 'post',
-            url: '/company/edit-sheduled-interview',
-            data: editsheduledInterviewForm.serialize(),
+            url: '/company/shedule-interview/',
+            data: shedulingInterviewForm.serialize(),
             success: function (data) {
+                console.log('success');
                 console.log(data);
                 let updatedData = data.data.modifiedCompanyRecord
                 // render sheduled interview table
                 let rederableTable = document.getElementById('sheduled-interviews-table' + updatedData._id);
-                console.log('data.data.html', data.data.html)
                 rederableTable.innerHTML = data.data.html;
                 toastr.options.timeOut = 1500;
-                toastr.success('Interview Updated');
+                toastr.success('Interview Added');
+                document.getElementById(formId).reset();
             }, error: function (error) {
                 console.log(error.responseText);
                 errObj = JSON.parse(error.responseText);
@@ -39,6 +43,9 @@ function editsheduleInterview(formId, closeBtnId) {
                 document.getElementById(formId).reset();
             }
         });
+
     }
+
+
 }
 

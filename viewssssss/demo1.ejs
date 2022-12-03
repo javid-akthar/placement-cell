@@ -1,1 +1,185 @@
-<p>value of counter <%= title %> </p>
+<!-- {company, student_list} -->
+<div class="accordion" id="company-accordian63824a22680c848b8d65defb" style="padding: 0px 3%;">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0" style = "display: flex; justify-content: space-between;">
+          <span>
+            dadsf
+          </span>
+              <div style = "display: flex;
+              align-content: center;
+               justify-content: flex-end;">
+               <!-- Button trigger modal -->
+  <button   type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenterUpdatedCompany63824a22680c848b8d65defb">
+      Updated Company
+    </button>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenterUpdatedCompany63824a22680c848b8d65defb" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" style="font-size:16px;">
+              <form id="company-update-form-submit" action="/company/create" method="POST" class="sign-in-form">
+                  <div class="form-group">
+                    <label for="companyName">Company Name</label>
+                    <input name="companyName"  type="input" class="form-control form-control-sm" id="companyName" placeholder="enter Company Name" value="dadsf" autocomplete="off">
+                  </div>
+              <div class="form-group">
+                <label for="date">Date:</label>
+                <br>
+                <input value="2022-11-16"type="date" class="form-control form-control-sm" id="date" name="date">
+              </div>
+              <input type="hidden" name="companyId" value="63824a22680c848b8d65defb">
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button id="company-update-form-close-btn" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button onclick="updateCompanyAjax('company-update-form-submit','company-update-form-close-btn','company-accordian63824a22680c848b8d65defb')" type="button" class="btn btn-primary">Save changes edit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+  
+    <!-- <script>
+    function addCompany(a) {
+       document.getElementById(a).submit();
+    }
+    </script>   -->
+  
+  
+  
+  <button onclick="deleteCompanyAndSheduledInterviews('63824a22680c848b8d65defb','company-accordian63824a22680c848b8d65defb')" type="button" class="btn btn-danger">Delete</button>
+  
+  
+  
+              <button onclick="toggle('student-details-toggle63824a22680c848b8d65defb')" class="btn btn-link" type="button" data-toggle="collapse"
+                data-target="#collapseOne63824a22680c848b8d65defb" aria-expanded="false" aria-controls="collapseOne">
+                Show Company Details <i class="fa-regular fa-square-caret-down"
+                  id="student-details-toggle63824a22680c848b8d65defb"
+                  onclick="toggle('student-details-toggle63824a22680c848b8d65defb')"></i>
+              </button>
+  
+        </h2>
+      </div>
+  
+      <div id="collapseOne63824a22680c848b8d65defb" class="collapse" aria-labelledby="headingOne"
+        data-parent="#company-accordian63824a22680c848b8d65defb">
+        <div class="card-body">
+           <table class="table table-hover table-bordered">
+      <thead>
+          <tr>
+              <th scope="col">Company Name</th>
+              <th scope="col">Interview Date</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>
+                  dadsf
+              </td>
+              <td>
+                  2022-11-16
+              </td>
+          </tr>
+      </tbody>
+  </table>
+  
+  
+           <!-- {company, student_list} -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sheduleInterview">
+      Shedule Interview
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="sheduleInterview" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Shedule Interview</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body63824a22680c848b8d65defb" style="font-size:16px;">
+                  <form id="shedule-interview63824a22680c848b8d65defb"  method="POST" class="sign-in-form">
+                      <div class="form-group">
+                          <label for="profile">Profile</label>
+                          <input name="profile" type="input" class="form-control form-control-sm" id="profile"
+                              placeholder="enter Profile" value="" autocomplete="off">
+                      </div>
+                      <label for="student">Student</br><small>*if student doesnt appear here pls add student and shedule       
+                              interview</small></label>
+  
+                      <select name="studentId" class="form-select" aria-label="Default select example" id="student">
+                          <option selected>Open this select menu</option>
+  
+                      </select>
+                      <br>
+                      <label for="result">Result</label>
+                      <select name="result" class="form-select" aria-label="Default select example" id="result">
+                          <option selected>Open this select menu</option>
+                          <option value="PASS">PASS</option>
+                          <option value="FAIL">FAIL</option>
+                          <option value="On Hold">On Hold</option>
+                          <option value="Didn’t Attempt">Didn’t Attempt</option>
+                      </select>
+                      <br>
+                      <input type="hidden" name="companyId" value="63824a22680c848b8d65defb">
+                      <input type="hidden" name="date" value="2022-11-16">
+                      <input type="hidden" name="companyName" value="dadsf">
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button id="sheduleInterviewCloseButton63824a22680c848b8d65defb" type="button" class="btn btn-secondary"     
+                      data-dismiss="modal">Close</button>
+                  <button
+                      onclick="sheduleInterview('shedule-interview63824a22680c848b8d65defb', 'sheduleInterviewCloseButton63824a22680c848b8d65defb')"
+                      type="button" class="btn btn-primary">Save
+                      changes</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+  
+           <!-- {company, student_list} -->
+  <div  id="sheduled-interviews-table63824a22680c848b8d65defb">
+      <table class="table table-striped">
+      <thead>
+          <tr>
+              <th scope="col">S.No</th>
+              <th scope="col">Student Name</th>
+              <th scope="col">Profile</th>
+              <th scope="col">Result</th>
+          </tr>
+      </thead>
+      <tbody>
+  
+          <!--  -->
+  
+  
+              <tr>
+              <td colspan="5">No Student Sheduled for Interview</td>
+          </tr>
+  
+  
+          <!--    -->
+      </tbody>
+  </table>
+  </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- <script type="text/javascript" src="/js/accordian.js"></script> -->

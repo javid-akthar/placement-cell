@@ -1,5 +1,8 @@
 <div class="interview-container">
+    <%- include('interview_add_modal'); %>
+    <div id="company-list-container">
     <% for(company of company_list){ %>
        <%- include('company_accordian', {company, student_list}); %>
-    <%}%>    
+    <% } %> 
+</div>   
 </div>

@@ -1,0 +1,27 @@
+<h1 class="job-heading">Jobs Available</h1>
+<div class="job-list-container">
+    <ul class="list-group job-list">
+        <% console.log('jobs',job_list)%>
+            <%for (job of job_list) {%>
+                <li>
+                    <div class="card">
+                        <h5 class="card-header"><%= job.title %></h5>
+                        <div class="card-body">
+                            <p>Company Name: <%= job.company_name %>
+                            </p>
+                            <p>Job Type: <%= job.job_types %>
+                            </p>
+                            <p>Loaction: <%= job.location %>
+                            </p>
+                            <p>Salary: <%= job.salary %>
+                            </p>
+                            <a target="_blank" href="<%= job.url %> " class="btn btn-primary">More Details</a>
+                        </div>
+                    </div>
+                </li>
+
+                <% } %>
+    </ul>
+
+
+</div>
