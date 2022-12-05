@@ -1,5 +1,7 @@
 const express = require('express');
 const path = require('path');
+const env = require('./config/environment');
+const logger = require('morgan');
 const expressLayout = require('express-ejs-layouts')
 const cookieParser = require('cookie-parser');
 const port = 8002 ;
@@ -17,22 +19,34 @@ const sassMiddleware =require('node-sass-middleware');
 // const { flash } = require('express-flash-message');
 const flash = require('connect-flash');
 const customMware = require('./config/middleware');
+console.log('env',env);
+
+// if (env.name == 'development'){
+//     app.use(sassMiddleware({
+//         src: path.join(__dirname, env.asset_path, 'scss'),
+//         dest: path.join(__dirname, env.asset_path, 'css'),
+//         debug: true,
+//         outputStyle: 'extended',
+//         prefix: '/css',
+//     }));
+// }
 
 app.use(sassMiddleware({
-    src: './assets/scss',
-    dest: './assets/css',
+    src: path.join(__dirname, env.asset_path, 'scss'),
+    dest: path.join(__dirname, env.asset_path, 'css'),
     debug: true,
     outputStyle: 'extended',
     prefix: '/css',
 }));
 
+app.use(logger(env.morgan.mode, env.morgan.options));
 app.use(expressLayout);
 app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(express.static('assets'));
+app.use(express.static(env.asset_path));
 // app.use("/static", express.static('./static/'));
 
 

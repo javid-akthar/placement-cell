@@ -1,13 +1,4 @@
 
-//  async function apicall(){
-//     var data = await fetch("https://www.arbeitnow.com/api/job-board-api");
-//  var res = await data.json();
-//  console.log('dd',res.data[0]);
-//  console.log('dd',res);
-//  }
-//  apicall();
-
- 
 
 let deleteCompanyAndSheduledInterviews = function (deletableCompanyId, deletableCompanyAccordian) {
     console.log('insidedeletableCompanyId',deletableCompanyId);

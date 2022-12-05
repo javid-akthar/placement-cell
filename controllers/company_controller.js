@@ -244,7 +244,7 @@ module.exports.deleteSheduledInterview = async function (req, res) {
                 }
             });
         let studentId = req.query.studentId;
-        await Student.findByIdAndUpdate(studentId, { $push: { interviews: interviewId } });
+        await Student.findByIdAndUpdate(studentId, { $pull: { interviews: interviewId } });
         console.log(modifiedCompanyRecord);
         console.log('modifiedCompanyRecord', modifiedCompanyRecord);
         let student_list = await Student.find({});

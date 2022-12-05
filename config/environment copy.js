@@ -1,69 +1,103 @@
-const fs = require('fs');
-const rfs = require('rotating-file-stream');
+const express = require('express');
+const env = require('./config/environment');
+const logger = require('morgan');
+
+
+const cookieParser = require('cookie-parser');
+const app = express();
+require('./config/view-helpers')(app);
+const port = 8000;
+const expressLayouts = require('express-ejs-layouts');
+const db = require('./config/mongoose');
+// used for session cookie
+const session = require('express-session');
+const passport = require('passport');
+const passportLocal = require('./config/passport-local-strategy');
+const passportJWT = require('./config/passport-jwt-strategy');
+const passportGoogle = require('./config/passport-google-oauth2-strategy');
+
+const MongoStore = require('connect-mongo')(session);
+const sassMiddleware = require('node-sass-middleware');
+const flash = require('connect-flash');
+const customMware = require('./config/middleware');
+
+// setup the chat server to be used with socket.io
+const chatServer = require('http').Server(app);
+const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
+chatServer.listen(5000);
+console.log('chat server is listening on port 5000');
 const path = require('path');
 
+if (env.name == 'development'){
+    app.use(sassMiddleware({
+        src: path.join(__dirname, env.asset_path, 'scss'),
+        dest: path.join(__dirname, env.asset_path, 'css'),
+        debug: true,
+        outputStyle: 'extended',
+        prefix: '/css'
+    }));
+}
 
-const logDirectory = path.join(__dirname, '../production_logs');
-fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+app.use(express.urlencoded());
 
-const accessLogStream = rfs('access.log', {
-    interval: '1d',
-    path: logDirectory
+app.use(cookieParser());
+
+app.use(express.static(env.asset_path));
+// make the uploads path available to the browser
+app.use('/uploads', express.static(__dirname + '/uploads'));
+
+app.use(logger(env.morgan.mode, env.morgan.options));
+
+app.use(expressLayouts);
+// extract style and scripts from sub pages into the layout
+app.set('layout extractStyles', true);
+app.set('layout extractScripts', true);
+
+
+
+
+// set up the view engine
+app.set('view engine', 'ejs');
+app.set('views', './views');
+
+// mongo store is used to store the session cookie in the db
+app.use(session({
+    name: 'codeial',
+    // TODO change the secret before deployment in production mode
+    secret: env.session_cookie_key,
+    saveUninitialized: false,
+    resave: false,
+    cookie: {
+        maxAge: (1000 * 60 * 100)
+    },
+    store: new MongoStore(
+        {
+            mongooseConnection: db,
+            autoRemove: 'disabled'
+        
+        },
+        function(err){
+            console.log(err ||  'connect-mongodb setup ok');
+        }
+    )
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(passport.setAuthenticatedUser);
+
+app.use(flash());
+app.use(customMware.setFlash);
+
+// use express router
+app.use('/', require('./routes'));
+
+
+app.listen(port, function(err){
+    if (err){
+        console.log(`Error in running the server: ${err}`);
+    }
+
+    console.log(`Server is running on port: ${port}`);
 });
-
-
-
-const development = {
-    name: 'development',
-    asset_path: '/assets',
-    session_cookie_key: 'blahsomething',
-    db: 'codeial_development',
-    smtp: {
-        service: 'gmail',
-        host: 'smtp.gmail.com',
-        port: 587,
-        secure: false,
-        auth: {
-            user: 'alchemy.cn18',
-            pass: 'codingninjas'
-        }
-    },
-    google_client_id: "313233209747-dnqmail3j800a2jvsuckqhohodhs7i63.apps.googleusercontent.com",
-    google_client_secret: "0FXb5EBWa4xRfJ8jR-1HKMd2",
-    google_call_back_url: "http://localhost:8000/users/auth/google/callback",
-    jwt_secret: 'codeial',
-    morgan: {
-        mode: 'dev',
-        options: {stream: accessLogStream}
-    }
-}
-
-
-const production =  {
-    name: 'production',
-    asset_path: process.env.CODEIAL_ASSET_PATH,
-    session_cookie_key: process.env.CODEIAL_SESSION_COOKIE_KEY,
-    db: process.env.CODEIAL_DB,
-    smtp: {
-        service: 'gmail',
-        host: 'smtp.gmail.com',
-        port: 587,
-        secure: false,
-        auth: {
-            user: process.env.CODEIAL_GMAIL_USERNAME,
-            pass: process.env.CODEIAL_GMAIL_PASSWORD
-        }
-    },
-    google_client_id: process.env.CODEIAL_GOOGLE_CLIENT_ID,
-    google_client_secret: process.env.CODEIAL_GOOGLE_CLIENT_SECRET,
-    google_call_back_url: process.env.CODEIAL_GOOGLE_CALLBACK_RURL,
-    jwt_secret: process.env.CODEIAL_JWT_SECRET,
-    morgan: {
-        mode: 'combined',
-        options: {stream: accessLogStream}
-    }
-}
-
-
-
-module.exports = eval(process.env.CODEIAL_ENVIRONMENT) == undefined ? development : eval(process.env.CODEIAL_ENVIRONMENT);

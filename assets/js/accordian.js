@@ -1,4 +1,5 @@
 function toggle(ele) {
+    console.log('ele');
     var element = document.getElementById(ele);
     if (element.classList.contains("fa-square-caret-down")) {
         element.classList.remove("fa-square-caret-down");

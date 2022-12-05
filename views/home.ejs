@@ -4,10 +4,9 @@
 </head>
 
 <body>
-  <p>rendered from ejs view</p>
   <%- include('student_add_modal'); %>
     <%- include('interview_add_modal'); %>
-      <p>Student List</p>
+      <h3 style="text-align: center;">Student List</h3>
         <div id="student-details-container">
           <ul id="student-details-ul-container">
             <% for(i of student_list) {%>

@@ -4,6 +4,7 @@ const { Parser } = require("json2csv");
 
 // for converting all student data to csv
 module.exports.downloadCSV = async function (req, res) {
+  console.log("readed csv controller")
   try {
     let company_list = await Company.find({})
         .populate({
@@ -31,39 +32,39 @@ module.exports.downloadCSV = async function (req, res) {
       for (interview of student.interviews) {
         addedInterviewForStudent = true;
         let singleInterviewRecord = {};
-        obj["StudentID"] = student._id;
-        obj["StudentName"] = student.name;
-        obj["StudentCollege"] = student.college;
-        obj["StudentEmail"] = student.email;
-        obj["StudentPhoneNo"] = student.phone;
-        obj["StudentStatus"] = student.status;
-        obj["DSAScore"] = student.dsaScore;
-        obj["WebDevScore"] = student.webDevelopmentScore;
-        obj["ReactScore"] = student.reactScore;
-        obj["InterviewDate"] = interview.date;
-        obj["InterviewCompanyId"] = interview.companyId._id;
-        obj["InterviewCompany"] = interview.companyId.companyName;
-        obj["InterviewProfile"] = interview.profile;
-        obj["InterviewResult"] = interview.result;
+        singleInterviewRecord["StudentID"] = student._id;
+        singleInterviewRecord["StudentName"] = student.name;
+        singleInterviewRecord["StudentCollege"] = student.college;
+        singleInterviewRecord["StudentEmail"] = student.email;
+        singleInterviewRecord["StudentPhoneNo"] = student.phone;
+        singleInterviewRecord["StudentStatus"] = student.status;
+        singleInterviewRecord["DSAScore"] = student.dsaScore;
+        singleInterviewRecord["WebDevScore"] = student.webDevelopmentScore;
+        singleInterviewRecord["ReactScore"] = student.reactScore;
+        singleInterviewRecord["InterviewDate"] = interview.date;
+        singleInterviewRecord["InterviewCompanyId"] = interview.companyId._id;
+        singleInterviewRecord["InterviewCompany"] = interview.companyId.companyName;
+        singleInterviewRecord["InterviewProfile"] = interview.profile;
+        singleInterviewRecord["InterviewResult"] = interview.result;
         interviewRecord.push(singleInterviewRecord);
       }
 
       if(!addedInterviewForStudent){
         let singleInterviewRecord = {};
-        obj["StudentID"] = student._id;
-        obj["StudentName"] = student.name;
-        obj["StudentCollege"] = student.college;
-        obj["StudentEmail"] = student.email;
-        obj["StudentPhoneNo"] = student.phone;
-        obj["StudentStatus"] = student.status;
-        obj["DSAScore"] = student.dsaScore;
-        obj["WebDevScore"] = student.webDevelopmentScore;
-        obj["ReactScore"] = student.reactScore;
-        obj["InterviewDate"] = "-";
-        obj["InterviewCompanyId"] = "-";
-        obj["InterviewCompany"] = "-";
-        obj["InterviewProfile"] = "-";
-        obj["InterviewResult"] = "-";
+        singleInterviewRecord["StudentID"] = student._id;
+        singleInterviewRecord["StudentName"] = student.name;
+        singleInterviewRecord["StudentCollege"] = student.college;
+        singleInterviewRecord["StudentEmail"] = student.email;
+        singleInterviewRecord["StudentPhoneNo"] = student.phone;
+        singleInterviewRecord["StudentStatus"] = student.status;
+        singleInterviewRecord["DSAScore"] = student.dsaScore;
+        singleInterviewRecord["WebDevScore"] = student.webDevelopmentScore;
+        singleInterviewRecord["ReactScore"] = student.reactScore;
+        singleInterviewRecord["InterviewDate"] = "-";
+        singleInterviewRecord["InterviewCompanyId"] = "-";
+        singleInterviewRecord["InterviewCompany"] = "-";
+        singleInterviewRecord["InterviewProfile"] = "-";
+        singleInterviewRecord["InterviewResult"] = "-";
         interviewRecord.push(singleInterviewRecord);
       }
     }
