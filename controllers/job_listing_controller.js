@@ -1,11 +1,8 @@
 // importing axios for fetching API data
 const https = require('https')
 
-//controller for fetch the get request of github job
 module.exports.fetchJob = async function (req, response) {
   try {
-
-
     const url = "https://www.arbeitnow.com/api/job-board-api";
     https.get(url, res => {
       let data = '';

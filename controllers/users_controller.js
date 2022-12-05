@@ -1,6 +1,4 @@
 const User = require('../model/user');
-const { check, validationResult } = require('express-validator')
-const { flash } = require('express-flash-message');
 
 
 // render the sign up page
@@ -64,11 +62,7 @@ module.exports.createSession = function (req, res) {
 }
 
 module.exports.destroySession = function (req, res) {
-    // req.logout();
-    // req.flash('success', 'You have logged out!');
-
-
-    
+ 
     req.logout(function (err) {
         if (err) {
             console.log(err);
@@ -78,7 +72,5 @@ module.exports.destroySession = function (req, res) {
             res.redirect('/users/sign-in');
         }
     });
-    // return res.redirect('user/sign-in');
-
-    // return res.redirect('/users/sign-in');
+    
 }

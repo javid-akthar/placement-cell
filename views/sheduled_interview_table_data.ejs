@@ -9,7 +9,7 @@
     </thead>
     <tbody>
         <% count=1 %>
-        <!-- <% if(company.students != undefined){ %> -->
+        <% if(company.students != undefined){ %>
         <% for(k of company.students){ %>
             <tr>
                 <th scope="row"><%= count %></th>
@@ -27,6 +27,6 @@
         </tr>
           <% } %> 
 
-        <!-- <% } %>   -->
+        <% } %>  
     </tbody>
 </table>

@@ -2,13 +2,6 @@ const Company = require('../model/company');
 const Student = require('../model/student');
 const Interview = require('../model/student_interview');
 const ejs = require('ejs');
-// var jsdom = require("jsdom").jsdom;
-// const dom = new jsdom(data);
-// var  jquery = require('jquery');
-// var $ = require('jquery');
-// const $ = jquery(dom.window);
-// var jsdom = require('jsdom');
-// $ = require('jquery')(new jsdom.JSDOM().window);
 const toastr = require('toastr');
 
 module.exports.createCompany = async function (req, res) {
@@ -23,47 +16,6 @@ module.exports.createCompany = async function (req, res) {
         }
 
     });
-
-
-
-    // try{
-    //      newCompany = await Company.create(req.body);
-    //     let addedCompany = await Company.findById(newCompany._id)
-    //     // .populate({
-    //     //     path: 'students',
-    //     //     populate: {
-    //     //         path: 'studentId'
-    //     //     }
-    //     // });
-    //     let student_list = await Student.find({})
-    //     .populate({
-    //       path: 'interviews',
-    //       populate: {
-    //          path: 'companyId'
-    //       }
-    //       });
-
-    //     let html = await ejs.renderFile(__dirname +'../../views/company_accordian.ejs',{
-    //         company: addedCompany,
-    //         student_list: student_list
-    //     }); 
-    //     console.log('req.xhr',req.xhr);
-
-    //     if(req.xhr){
-    //         console.log('inside shr');
-    //         // new Toast("Welcome!");
-    //         // req.flash('success', 'user created')
-    //         return res.status(200).json({
-    //             data: {
-    //                 html: html
-    //             },
-    //             message: "addedCompanyRecord!"
-    //         });
-    //      } 
-    // }catch(err){
-    //     console.log('error in companyAdd controller');
-    //     console.log(err);
-    // }
 }
 
 module.exports.updateCompany = async function (req, res) {
@@ -97,10 +49,7 @@ module.exports.updateCompany = async function (req, res) {
     } catch (err) {
         console.log('error in updateComapny controller');
         console.log(err);
-        // req.flash('error', );
-        // return res.redirect('/company');
     }
-
 }
 
 module.exports.deleteCompany = async function (req, res) {
@@ -132,10 +81,7 @@ module.exports.deleteCompany = async function (req, res) {
         console.log('error in deleteComapny controller');
         console.log(err);
     }
-
 }
-
-
 
 module.exports.showComapny = async function (req, res) {
     try {

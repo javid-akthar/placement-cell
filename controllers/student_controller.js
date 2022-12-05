@@ -25,8 +25,6 @@ module.exports.createStudent = async function (req, res) {
 
         if (req.xhr) {
             console.log('inside shr');
-            // new Toast("Welcome!");
-            // req.flash('success', 'user created')
             return res.status(200).json({
                 data: {
                     html: html
@@ -37,17 +35,6 @@ module.exports.createStudent = async function (req, res) {
     } catch (err) {
         console.log('error in createStudent controller');
         console.log(err);
-        // console.log('typeof(err)',typeof(err));
-        // console.log(err["errors"]);
-        //  temp =   err["errors"] ;
-        //  temp = temp["properties"];
-        //  temp = temp["message"];
-        // temp = err["errors"];
-        //  console.log('temp',err["errors"]);
-        //  console.log('temp',temp["email"]);
-        //  temp = temp["email"];
-        //  temp = temp["properties"];
-        //  console.log('temp["properties"]',temp["message"]);
         let errorObj = "";
         for(errorObj in err["errors"]){
             console.log(errorObj);
@@ -77,15 +64,6 @@ module.exports.deleteStudent = async function (req, res) {
             }
         }
         let status = true;
-        // let updatedStudentsList = await Student.find({})
-        // .populate({
-        //     path: 'interviews',
-        //     populate: {
-        //         path: 'companyId'
-        //     }
-        // });
-
-        // res.locals.updatedStudentsList = req.user;
         if (req.xhr) {
             return res.status(200).json({
                 data: {
@@ -108,7 +86,13 @@ module.exports.updateStudent = async function (req, res) {
         let studentId = req.body.id;
         console.log('objvalue', req.body);
         let modifiedStudent = await Student.findByIdAndUpdate(studentId, obj, { runValidators: true });
-        modifiedStudent = await Student.findById(studentId);
+        modifiedStudent = await Student.findById(studentId)
+        .populate({
+            path: 'interviews',
+            populate: {
+              path: 'companyId'
+            }
+          });
 
         let html = await ejs.renderFile(__dirname + '../../views/student_details_list.ejs', {
             title: "Placement Cell",
