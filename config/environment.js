@@ -21,11 +21,22 @@ const development = {
     }
 }
 
+// const production = {
+//     name :'production',
+//     asset_path: process.env.PLACEMENT_CELL_ASSET_PATH,
+//     session_cookie_key: process.env.PLACEMENT_CELL_SESSION_COOKIE_KEY,
+//     db: process.env.PLACEMENT_CELL_DB,
+//     morgan:{
+//         mode:'combined',
+//         options:{stream: accessLogStream}
+//     }
+// }
+
 const production = {
     name :'production',
-    asset_path: process.env.PLACEMENT_CELL_ASSET_PATH,
-    session_cookie_key: process.env.PLACEMENT_CELL_SESSION_COOKIE_KEY,
-    db: process.env.PLACEMENT_CELL_DB,
+    asset_path: './assets',
+    session_cookie_key: 'blahsomething',
+    db: 'placement_cell_production_db',
     morgan:{
         mode:'combined',
         options:{stream: accessLogStream}
