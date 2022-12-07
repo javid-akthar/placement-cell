@@ -7,11 +7,13 @@ this application hels in adding students to database and also shedules
 - Express
 - Node Js
 
-# FrontEnd Technolog usezzzd
+# FrontEnd Technolog used
 - Ejs
 - BootStrap
 
+
 ## SETUP
 - clone or download the zip file
-- install npm in your computer
-- then type `npm start`
+- run `npm install`
+- after the packages installed
+- then run `npm start`
