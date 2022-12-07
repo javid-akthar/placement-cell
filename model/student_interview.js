@@ -1,6 +1,6 @@
 //Schema for fetching the details of students of particular interview selected
 const mongoose = require("mongoose");
-
+mongoose.set('strictQuery', true);
 const interviewSchema = new mongoose.Schema(
   {
     companyId: {
