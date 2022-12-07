@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', true);
+
+// company collection schema
 const companySchema = new mongoose.Schema({
 
     companyName: {

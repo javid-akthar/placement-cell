@@ -4,6 +4,7 @@ const Interview = require('../model/student_interview');
 const ejs = require('ejs');
 const toastr = require('toastr');
 
+// controller for creating the company
 module.exports.createCompany = async function (req, res) {
     Company.create(req.body, function (err, newCompany) {
         if (err) {
@@ -18,6 +19,7 @@ module.exports.createCompany = async function (req, res) {
     });
 }
 
+// controller for updating the company details
 module.exports.updateCompany = async function (req, res) {
     try {
         console.log('reached updatedCompany')
@@ -52,6 +54,7 @@ module.exports.updateCompany = async function (req, res) {
     }
 }
 
+// controller for deleting the company details
 module.exports.deleteCompany = async function (req, res) {
     console.log('reached deleteC0mpany')
     console.log(req.query);
@@ -83,6 +86,7 @@ module.exports.deleteCompany = async function (req, res) {
     }
 }
 
+// controller for showing the company details
 module.exports.showComapny = async function (req, res) {
     try {
         let company_list = await Company.find({})
@@ -109,6 +113,7 @@ module.exports.showComapny = async function (req, res) {
 
 }
 
+// controller for shedulign interview for students
 module.exports.sheduleInterview = async function (req, res) {
     try {
         let studentId = req.body.studentId;
@@ -169,7 +174,7 @@ module.exports.sheduleInterview = async function (req, res) {
     }
 }
 
-
+// controller for updating sheduled interview
 module.exports.updateSheduledInterview = async function (req, res) {
     try {
         let studentId = req.body.studentId;
@@ -227,6 +232,7 @@ module.exports.updateSheduledInterview = async function (req, res) {
     }
 }
 
+// controller for deleting sheduled interview
 module.exports.deleteSheduledInterview = async function (req, res) {
     try {
         console.log("reached deleteSheduledInterview");

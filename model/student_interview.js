@@ -1,6 +1,7 @@
-//Schema for fetching the details of students of particular interview selected
 const mongoose = require("mongoose");
 mongoose.set('strictQuery', true);
+
+// Interview collection schema
 const interviewSchema = new mongoose.Schema(
   {
     companyId: {
@@ -41,6 +42,7 @@ const interviewSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-// exporting interview schema
+
+// exporting Interview schema
 const Interview = mongoose.model("Interview", interviewSchema);
 module.exports = Interview;

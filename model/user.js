@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', true);
+
+// User schema
 const userSchema = new mongoose.Schema({
 
     email: {

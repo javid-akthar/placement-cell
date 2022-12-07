@@ -2,14 +2,17 @@ const fs = require('fs');
 const rfs = require('rotating-file-stream');
 const path = require('path');
 
+// code to create logs directory
 const logDirectory = path.join(__dirname,'../production_logs');
 fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
 
+// code for storing logs
 const accessLogStream = rfs.createStream('access.log',{
     interval:'1d',
     path:logDirectory
 });
 
+// Environemnt variable for development
 const development = {
     name :'development',
     asset_path: './assets',
@@ -21,17 +24,7 @@ const development = {
     }
 }
 
-// const production = {
-//     name :'production',
-//     asset_path: process.env.PLACEMENT_CELL_ASSET_PATH,
-//     session_cookie_key: process.env.PLACEMENT_CELL_SESSION_COOKIE_KEY,
-//     db: process.env.PLACEMENT_CELL_DB,
-//     morgan:{
-//         mode:'combined',
-//         options:{stream: accessLogStream}
-//     }
-// }
-
+// Environemnt variable for production
 const production = {
     name :'production',
     asset_path: './assets',

@@ -61,8 +61,8 @@ module.exports.createSession = function (req, res) {
     return res.redirect('/');
 }
 
+// controller for destroying the session created
 module.exports.destroySession = function (req, res) {
- 
     req.logout(function (err) {
         if (err) {
             console.log(err);

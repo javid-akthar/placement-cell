@@ -3,6 +3,7 @@ const Interview = require('../model/student_interview');
 const Company = require('../model/company');
 const ejs = require("ejs");
 
+// controlling for creating student
 module.exports.createStudent = async function (req, res) {
     try {
         console.log('value of req', req.body);
@@ -46,7 +47,7 @@ module.exports.createStudent = async function (req, res) {
     }
 }
 
-
+// controller for deleting student
 module.exports.deleteStudent = async function (req, res) {
     try {
         console.log('reached deletestudent')
@@ -78,6 +79,7 @@ module.exports.deleteStudent = async function (req, res) {
     }
 }
 
+// controller for updating student
 module.exports.updateStudent = async function (req, res) {
 
     try {

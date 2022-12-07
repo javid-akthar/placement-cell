@@ -1,5 +1,7 @@
 const Student = require('../model/student');
 const Company = require('../model/company')
+
+// home comtroler for displaying the student page
 module.exports.home = async function(req, res){
   try{
     let company_list = await Company.find({})

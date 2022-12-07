@@ -8,7 +8,6 @@ router.post('/create', companyController.createCompany);
 router.get('/delete', companyController.deleteCompany);
 router.post('/update', companyController.updateCompany);
 router.post('/shedule-interview', companyController.sheduleInterview);
-// router.get('/delete/', companyController.deleteCompany);
 router.post('/edit-sheduled-interview', companyController.updateSheduledInterview);
 router.get('/delete-sheduled-interview', companyController.deleteSheduledInterview);
 

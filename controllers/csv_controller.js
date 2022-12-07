@@ -2,7 +2,7 @@ const Student = require('../model/student');
 const Company = require("../model/company");
 const { Parser } = require("json2csv");
 
-// for converting all student data to csv
+// for converting all student data to csv format
 module.exports.downloadCSV = async function (req, res) {
   console.log("readed csv controller")
   try {
@@ -22,9 +22,8 @@ module.exports.downloadCSV = async function (req, res) {
             }
         });    
 
-    // let students = await Student.find({});
 
-    //Convert Data to json
+    //Convert csv Data to json
     let interviewRecord = [];
 
     for (student of student_list) {
@@ -82,13 +81,13 @@ module.exports.downloadCSV = async function (req, res) {
       "InterviewResult",
     ];
     const HeadingList = { Heading };
-    //Parse the json to csv
+    //Parse the json obj to csv format
     const parser = new Parser(HeadingList);
     const csv = parser.parse(interviewRecord);
     res.attachment("InterviewRecord.csv");
     res.status(200).send(csv);
   } catch (err) {
-    console.log("*** Error in Exporting the CSV of data controller ***", err);
+    console.log("Error in creating the CSV of data controller", err);
     return res.redirect("back");
   }
 };
