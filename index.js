@@ -8,17 +8,18 @@ const port = process.env.PORT || 3000;
 const app = express();
 const db = require('./config/mongoose');
 const bodyParser = require('body-parser');
-
 // used for session cookie
 const session = require('express-session');
 const passport = require('passport');
+const passportLocal = require('./config/passport-local-strategy');
 const MongoStore = require('connect-mongodb-session')(session);
 const sassMiddleware =require('node-sass-middleware');
 const flash = require('connect-flash');
 const customMware = require('./config/middleware');
 console.log('env',env);
 
-// middleware to conver scss to css files
+
+
 app.use(sassMiddleware({
     src: path.join(__dirname, env.asset_path, 'scss'),
     dest: path.join(__dirname, env.asset_path, 'css'),
@@ -27,7 +28,6 @@ app.use(sassMiddleware({
     prefix: '/css',
 }));
 
-// adding logger as middleware
 app.use(logger(env.morgan.mode, env.morgan.options));
 app.use(expressLayout);
 app.set('layout extractStyles', true);
@@ -36,8 +36,9 @@ app.set('layout extractScripts', true);
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(env.asset_path));
+// app.use("/static", express.static('./static/'));
 
-// setting the view engine as ejs
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 
@@ -62,11 +63,11 @@ app.use(session({
     )
 }));
 
-// adding passport in middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(passport.setAuthenticatedUser);
+// app.use(flash({ sessionKeyName: 'flashMessage' }));
 app.use(flash());
 app.use(customMware.setFlash);
 app.use('/',require('./routes'));
