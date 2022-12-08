@@ -23,7 +23,8 @@ module.exports.createStudent = async function (req, res) {
         //     title: "Placement Cell",
         //     i: addedStudent
         // });
-        let html = await ejs.renderFile(path.join(__dirname + '../views/student_details_list.ejs'), {
+        console.log('pathsss',path.join(__dirname, '../views/student_details_list.ejs'));
+        let html = await ejs.renderFile(path.join(__dirname, '../views/student_details_list.ejs'), {
             title: "Placement Cell",
             i: addedStudent
         });
@@ -105,7 +106,7 @@ module.exports.updateStudent = async function (req, res) {
         //     title: "Placement Cell",
         //     i: modifiedStudent
         // });
-        let html = await ejs.renderFile(path.join(__dirname + '../views/student_details_list.ejs'), {
+        let html = await ejs.renderFile(path.join(__dirname, '../views/student_details_list.ejs'), {
             title: "Placement Cell",
             i: modifiedStudent
         });
