@@ -3,6 +3,7 @@ const Student = require('../model/student');
 const Interview = require('../model/student_interview');
 const ejs = require('ejs');
 const toastr = require('toastr');
+const path = require('path');
 
 // controller for creating the company
 module.exports.createCompany = async function (req, res) {
@@ -34,7 +35,12 @@ module.exports.updateCompany = async function (req, res) {
                 }
             });
         let student_list = await Student.find({});
-        let html = await ejs.renderFile(__dirname + '../../views/company_accordian.ejs', {
+        // let html = await ejs.renderFile(__dirname + '../../views/company_accordian.ejs', {
+        //     title: "Placement Cell",
+        //     company: updatedCompany,
+        //     student_list
+        // });
+        let html = await ejs.renderFile(path.join(__dirname,'../views/company_accordian.ejs'), {
             title: "Placement Cell",
             company: updatedCompany,
             student_list
@@ -139,7 +145,12 @@ module.exports.sheduleInterview = async function (req, res) {
         await Student.findByIdAndUpdate(studentId, { $push: { interviews: createdInterview._id } });
         console.log('modifiedCompanyRecord', modifiedCompanyRecord);
         let student_list = await Student.find({});
-        let html = await ejs.renderFile(__dirname + '../../views/sheduled_interview_table_data.ejs', {
+        // let html = await ejs.renderFile(__dirname + '../../views/sheduled_interview_table_data.ejs', {
+        //     title: "Placement Cell",
+        //     company: modifiedCompanyRecord,
+        //     student_list
+        // });
+        let html = await ejs.renderFile(path.join(__dirname + '../views/sheduled_interview_table_data.ejs'), {
             title: "Placement Cell",
             company: modifiedCompanyRecord,
             student_list
@@ -199,7 +210,12 @@ module.exports.updateSheduledInterview = async function (req, res) {
             });
         console.log('modifiedCompanyRecord', modifiedCompanyRecord);
         let student_list = await Student.find({});
-        let html = await ejs.renderFile(__dirname + '../../views/sheduled_interview_table_data.ejs', {
+        // let html = await ejs.renderFile(__dirname + '../../views/sheduled_interview_table_data.ejs', {
+        //     title: "Placement Cell",
+        //     company: modifiedCompanyRecord,
+        //     student_list
+        // });
+        let html = await ejs.renderFile(path.join(__dirname + '../views/sheduled_interview_table_data.ejs'), {
             title: "Placement Cell",
             company: modifiedCompanyRecord,
             student_list
@@ -254,7 +270,12 @@ module.exports.deleteSheduledInterview = async function (req, res) {
         console.log(modifiedCompanyRecord);
         console.log('modifiedCompanyRecord', modifiedCompanyRecord);
         let student_list = await Student.find({});
-        let html = await ejs.renderFile(__dirname + '../../views/sheduled_interview_table_data.ejs', {
+        // let html = await ejs.renderFile(__dirname + '../../views/sheduled_interview_table_data.ejs', {
+        //     title: "Placement Cell",
+        //     company: modifiedCompanyRecord,
+        //     student_list
+        // });
+        let html = await ejs.renderFile(path.join(__dirname + '../views/sheduled_interview_table_data.ejs'), {
             title: "Placement Cell",
             company: modifiedCompanyRecord,
             student_list

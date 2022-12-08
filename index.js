@@ -9,6 +9,7 @@ const app = express();
 const db = require('./config/mongoose');
 const bodyParser = require('body-parser');
 // used for session cookie
+
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
