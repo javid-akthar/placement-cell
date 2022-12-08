@@ -4,7 +4,7 @@
   </button>
   
   <!-- Modal -->
-  <div class="modal fade" id="exampleModalCenterUpdatedCompany<%= company._id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal fade" id="exampleModalCenterUpdatedCompany<%= company._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -14,7 +14,7 @@
           </button>
         </div>
         <div class="modal-body" style="font-size:16px;">
-            <form id="company-update-form-submit" action="/company/create" method="POST" class="sign-in-form">
+            <form id="company-update-form-submit<%= company._id%>" action="/company/create" method="POST" class="sign-in-form">
                 <div class="form-group">
                   <label class="required" for="companyName">Company Name</label>
                   <input required name="companyName"  type="input" class="form-control form-control-sm" id="companyName" placeholder="enter Company Name" value="<%= company.companyName %>" autocomplete="off">
@@ -29,7 +29,7 @@
         </div>
         <div class="modal-footer">
           <button id="company-update-form-close-btn" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button onclick="updateCompanyAjax('company-update-form-submit','company-update-form-close-btn','company-accordian<%= company._id %>','companyCollapse<%= company._id %>')" type="button" class="btn btn-primary">Save changes edit</button>
+          <button onclick="updateCompanyAjax('company-update-form-submit<%= company._id%>','company-update-form-close-btn','company-accordian<%= company._id %>','companyCollapse<%= company._id %>')" type="button" class="btn btn-primary">Save changes edit</button>
         </div>
       </div>
     </div>

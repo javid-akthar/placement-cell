@@ -26,6 +26,8 @@ module.exports.updateCompany = async function (req, res) {
         console.log('reached updatedCompany')
         let companyId = req.body.companyId;
         let newObj = req.body;
+        console.log('companyId',companyId);
+        console.log('newObj',newObj);
         await Company.findByIdAndUpdate(companyId, newObj);
         let updatedCompany = await Company.findById(companyId)
             .populate({
@@ -45,7 +47,7 @@ module.exports.updateCompany = async function (req, res) {
             company: updatedCompany,
             student_list
         });
-        console.log('value of html', html);
+        // console.log('value of html', html);
         if (req.xhr) {
             return res.status(200).json({
                 data: {
