@@ -2,6 +2,7 @@ const Student = require('../model/student');
 const Interview = require('../model/student_interview');
 const Company = require('../model/company');
 const ejs = require("ejs");
+const path = require('path');
 
 // controlling for creating student
 module.exports.createStudent = async function (req, res) {
