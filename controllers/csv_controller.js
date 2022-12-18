@@ -44,7 +44,14 @@ module.exports.downloadCSV = async function (req, res) {
         singleInterviewRecord["InterviewCompanyId"] = interview.companyId._id;
         singleInterviewRecord["InterviewCompany"] = interview.companyId.companyName;
         singleInterviewRecord["InterviewProfile"] = interview.profile;
-        singleInterviewRecord["InterviewResult"] = interview.result;
+        console.log(interview.result);
+        if(interview.result == "Didn’t Attempt"){
+          let result = "Didnot Attempt";
+          singleInterviewRecord["InterviewResult"] = result;
+        }else{
+          singleInterviewRecord["InterviewResult"] = interview.result;
+        }
+        
         interviewRecord.push(singleInterviewRecord);
       }
 
