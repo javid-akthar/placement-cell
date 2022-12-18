@@ -792,3 +792,6 @@
 [0mGET /js/student_edit_modal.js [36m304[0m 2.628 ms - -[0m
 [0mGET /csv/download [36m304[0m 73.138 ms - -[0m
 [0mGET /csv/download [32m200[0m 159.865 ms - 1548[0m
+[0mPOST /company/edit-sheduled-interview [32m200[0m 338.471 ms - 14955[0m
+[0mPOST /company/shedule-interview/ [33m400[0m 38.445 ms - 116[0m
+[0mPOST /company/shedule-interview/ [33m400[0m 18.138 ms - 116[0m
