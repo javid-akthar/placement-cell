@@ -5,6 +5,7 @@ const Company = require('../model/company')
 module.exports.home = async function(req, res){
   try{
     let company_list = await Company.find({})
+    // exptracting the company and student data
   let student_list = await Student.find({})
   .populate({
     path: 'interviews',
@@ -13,6 +14,7 @@ module.exports.home = async function(req, res){
     }
   });
 
+    // rendering the student page
     return res.render('home',{
             title: "Contact List",
             student_list,

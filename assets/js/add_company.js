@@ -1,3 +1,4 @@
+// function to call addCompany controller
 function addCompany(formId) {  
   let formInputValidation = true;
   let formElements = $('#' + formId + " " + "input");
@@ -7,12 +8,11 @@ function addCompany(formId) {
       return inputElement.reportValidity();
     }
   }
+  // function to do form input validation
   if (formInputValidation) {
     document.getElementById(formId).submit();
     document.getElementById(formId).reset();
-  
 }
-   
 }
 
   console.log("add-form-loaded");

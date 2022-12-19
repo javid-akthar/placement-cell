@@ -6,6 +6,7 @@ const { Parser } = require("json2csv");
 module.exports.downloadCSV = async function (req, res) {
   console.log("readed csv controller")
   try {
+    // extracting company data
     let company_list = await Company.find({})
         .populate({
             path: 'students',
@@ -13,7 +14,7 @@ module.exports.downloadCSV = async function (req, res) {
                 path: 'studentId'
             }
         });
-
+        // extracting student data
         let student_list = await Student.find({})
         .populate({
             path: 'interviews',
@@ -29,6 +30,7 @@ module.exports.downloadCSV = async function (req, res) {
     for (student of student_list) {
       let addedInterviewForStudent = false;
       for (interview of student.interviews) {
+        // adding record for each student's interview
         addedInterviewForStudent = true;
         let singleInterviewRecord = {};
         singleInterviewRecord["StudentID"] = student._id;
@@ -44,7 +46,6 @@ module.exports.downloadCSV = async function (req, res) {
         singleInterviewRecord["InterviewCompanyId"] = interview.companyId._id;
         singleInterviewRecord["InterviewCompany"] = interview.companyId.companyName;
         singleInterviewRecord["InterviewProfile"] = interview.profile;
-        console.log(interview.result);
         if(interview.result == "Didn’t Attempt"){
           let result = "Didnot Attempt";
           singleInterviewRecord["InterviewResult"] = result;
@@ -56,6 +57,7 @@ module.exports.downloadCSV = async function (req, res) {
       }
 
       if(!addedInterviewForStudent){
+        // if student is not sheduled for any interiew making the interview fields as null
         let singleInterviewRecord = {};
         singleInterviewRecord["StudentID"] = student._id;
         singleInterviewRecord["StudentName"] = student.name;
@@ -78,22 +80,27 @@ module.exports.downloadCSV = async function (req, res) {
       "StudentID",
       "StudentName",
       "StudentCollege",
+      "StudentEmail",
+      "StudentPhoneNo",
       "StudentStatus",
       "DSAScore",
       "WebdScore",
       "ReactScore",
       "InterviewDate",
+      "InterviewCompanyId",
       "InterviewCompany",
       "InterviewProfile",
-      "InterviewResult",
+      "InterviewResult"
     ];
     const HeadingList = { Heading };
     //Parse the json obj to csv format
     const parser = new Parser(HeadingList);
     const csv = parser.parse(interviewRecord);
+    // sending csv file as response
     res.attachment("InterviewRecord.csv");
     res.status(200).send(csv);
   } catch (err) {
+    // hadling in case of error response
     console.log("Error in creating the CSV of data controller", err);
     return res.redirect("back");
   }

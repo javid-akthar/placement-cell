@@ -1,5 +1,5 @@
 
-console.log(' deleteSheduledInterview loaded')
+// function to delete sheduled interview
 function deleteSheduledInterview(deletableRecord, companyId, studentId){
     console.log('reaceh deleteSheduledInterview')
     $.ajax({

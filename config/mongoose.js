@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+// loading env file
 const env = require('./environment');
 
 //connect to the database

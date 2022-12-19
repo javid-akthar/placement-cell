@@ -1,8 +1,9 @@
-console.log("add-form-loaded");
+// function for adding student
 function addNewStudent(formId, closeBtnId) {
   let formInputValidation = true;
   let formElements = $('#' + formId + " " + "input");
   // const reversedFormElements = formElements.reverse();
+  // function to perform form input validation
   for (inputElement of formElements) {
     if (!inputElement.checkValidity()) {
        formInputValidation = false;
@@ -17,7 +18,7 @@ function addNewStudent(formId, closeBtnId) {
     $(".modal-backdrop").hide();
     console.log('studentAddForm.serialize()', studentAddForm.serialize());
     console.log('studentAddForm.name', studentAddForm.name);
-
+      // code to do ajax call to student/create controller
     $.ajax({
       type: 'post',
       url: '/student/create',

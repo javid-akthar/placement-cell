@@ -1,3 +1,4 @@
+// function to delete student
 let deleteStudentAndSheduledInterview = function (deletableStudnetId, deletableStudentRecord) {
     console.log('deletableStudnetId',deletableStudnetId);
     console.log('deletableStudentRecord',deletableStudentRecord);

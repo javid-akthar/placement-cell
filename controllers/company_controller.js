@@ -26,8 +26,7 @@ module.exports.updateCompany = async function (req, res) {
         console.log('reached updatedCompany')
         let companyId = req.body.companyId;
         let newObj = req.body;
-        console.log('companyId',companyId);
-        console.log('newObj',newObj);
+        // updating company details in mongodb
         await Company.findByIdAndUpdate(companyId, newObj);
         let updatedCompany = await Company.findById(companyId)
             .populate({
@@ -37,17 +36,13 @@ module.exports.updateCompany = async function (req, res) {
                 }
             });
         let student_list = await Student.find({});
-        // let html = await ejs.renderFile(__dirname + '../../views/company_accordian.ejs', {
-        //     title: "Placement Cell",
-        //     company: updatedCompany,
-        //     student_list
-        // });
+        
+        // rendering the impacted html elements
         let html = await ejs.renderFile(path.join(__dirname,'../views/company_accordian.ejs'), {
             title: "Placement Cell",
             company: updatedCompany,
             student_list
         });
-        // console.log('value of html', html);
         if (req.xhr) {
             return res.status(200).json({
                 data: {
@@ -65,17 +60,16 @@ module.exports.updateCompany = async function (req, res) {
 // controller for deleting the company details
 module.exports.deleteCompany = async function (req, res) {
     console.log('reached deleteC0mpany')
-    console.log(req.query);
-    console.log(req.body);
     try {
         let deletableCompanyId = req.query.deletableCompanyId;
         console.log('deletableCompanyId', deletableCompanyId);
+        // deleting the company record
         let deletableCompanyRecord = await Company.findByIdAndDelete(deletableCompanyId);
+        // deleted the impacted interviews and updating the interviews in student collection
         if (deletableCompanyRecord.students) {
             for (student of deletableCompanyRecord.students) {
                 let removedInterviewRecord = await Interview.findByIdAndDelete(student);
                 let modifyRequiredStudentRecord = removedInterviewRecord.studentId;
-                console.log('modifyRequiredStudentRecord', modifyRequiredStudentRecord);
                 await Student.findByIdAndUpdate(modifyRequiredStudentRecord, { $pull: { interviews: removedInterviewRecord._id } });
             }
         }
@@ -105,9 +99,6 @@ module.exports.showComapny = async function (req, res) {
                 }
             });
 
-        console.log('company_list', company_list);
-        console.log(company_list.students);
-        // console.log(company_list.students[0].studentId.name);
         let student_list = await Student.find({});
         res.render('interview', {
             title: "Placement Cell",
@@ -132,8 +123,10 @@ module.exports.sheduleInterview = async function (req, res) {
                 error: "Ple select valid value for student"
             });
         }
+        // adding interview in interview collection
         let createdInterview = await Interview.create(req.body);
         console.log('createdInterview', createdInterview);
+        // adding the interview reference in company table
         let companyId = createdInterview.companyId;
         console.log('companyId', companyId);
         let modifiedCompanyRecord = await Company.findByIdAndUpdate(companyId, { $push: { students: createdInterview._id } });
@@ -144,20 +137,16 @@ module.exports.sheduleInterview = async function (req, res) {
                     path: 'studentId'
                 }
             });
+        // adding the interview reference in student table
         await Student.findByIdAndUpdate(studentId, { $push: { interviews: createdInterview._id } });
         console.log('modifiedCompanyRecord', modifiedCompanyRecord);
         let student_list = await Student.find({});
-        // let html = await ejs.renderFile(__dirname + '../../views/sheduled_interview_table_data.ejs', {
-        //     title: "Placement Cell",
-        //     company: modifiedCompanyRecord,
-        //     student_list
-        // });
+        // rendering the impacted html elements
         let html = await ejs.renderFile(path.join(__dirname, '../views/sheduled_interview_table_data.ejs'), {
             title: "Placement Cell",
             company: modifiedCompanyRecord,
             student_list
         });
-        console.log('value of html', html);
         if (req.xhr) {
             return res.status(200).json({
                 data: {
@@ -202,6 +191,7 @@ module.exports.updateSheduledInterview = async function (req, res) {
         console.log('req.body', req.body)
         let interviewId = req.body.interviewId;
         let companyId = req.body.companyId;
+        // updating the interview details in sheduled interview table
         await Interview.findByIdAndUpdate(interviewId, req.body);
         let modifiedCompanyRecord = await Company.findById(companyId)
             .populate({
@@ -217,12 +207,12 @@ module.exports.updateSheduledInterview = async function (req, res) {
         //     company: modifiedCompanyRecord,
         //     student_list
         // });
+        // rendering the impacted html elements
         let html = await ejs.renderFile(path.join(__dirname, '../views/sheduled_interview_table_data.ejs'), {
             title: "Placement Cell",
             company: modifiedCompanyRecord,
             student_list
         });
-        console.log('value of html', html);
         if (req.xhr) {
             return res.status(200).json({
                 data: {
@@ -255,11 +245,12 @@ module.exports.deleteSheduledInterview = async function (req, res) {
     try {
         console.log("reached deleteSheduledInterview");
         console.log('req.body', req.body);
-        console.log('req.query.interviewId', req.query.interviewId);
         let interviewId = req.query.interviewId;
         let companyId = req.query.companyId;
+        // deleting the interview record in interview collection
         await Interview.findByIdAndRemove(interviewId);
         let companyRecord = await Company.findByIdAndUpdate(companyId, { $pull: { students: interviewId } });
+        // deleting the interview refernce in Company collection
         let modifiedCompanyRecord = await Company.findById(companyId)
             .populate({
                 path: 'students',
@@ -268,6 +259,7 @@ module.exports.deleteSheduledInterview = async function (req, res) {
                 }
             });
         let studentId = req.query.studentId;
+        // deleting the interview refernce in Student collection
         await Student.findByIdAndUpdate(studentId, { $pull: { interviews: interviewId } });
         console.log(modifiedCompanyRecord);
         console.log('modifiedCompanyRecord', modifiedCompanyRecord);
@@ -277,12 +269,12 @@ module.exports.deleteSheduledInterview = async function (req, res) {
         //     company: modifiedCompanyRecord,
         //     student_list
         // });
+        // rendering the impacted html elements
         let html = await ejs.renderFile(path.join(__dirname, '../views/sheduled_interview_table_data.ejs'), {
             title: "Placement Cell",
             company: modifiedCompanyRecord,
             student_list
         });
-        console.log('value of html', html);
         if (req.xhr) {
             return res.status(200).json({
                 data: {

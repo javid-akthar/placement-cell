@@ -1,3 +1,4 @@
+// function to shedule inerview
 function sheduleInterview(formId, closeBtnId) {
 
     let formInputValidation = true;
@@ -8,6 +9,7 @@ function sheduleInterview(formId, closeBtnId) {
             return inputElement.reportValidity();
         }
     }
+    // function to perform form input validation
     if (formInputValidation) {
         console.log('reached sheduleInterview');
         let formIdtemp = document.getElementById(formId);
@@ -19,6 +21,7 @@ function sheduleInterview(formId, closeBtnId) {
         console.log('shedulingInterviewForm.serialize()', shedulingInterviewForm.serialize());
         document.getElementById(closeBtnId).click();
         $(".modal-backdrop").hide();
+        // doing ajax call
         $.ajax({
             type: 'post',
             url: '/company/shedule-interview/',

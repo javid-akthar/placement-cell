@@ -2,17 +2,17 @@ const fs = require('fs');
 const rfs = require('rotating-file-stream');
 const path = require('path');
 
-// code to create logs directory
+// code to create logs folder
 const logDirectory = path.join(__dirname,'../production_logs');
 fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
 
-// code for storing logs
+// code for adding logs
 const accessLogStream = rfs.createStream('access.log',{
     interval:'1d',
     path:logDirectory
 });
 
-// Environemnt variable for development
+// Enviroenment variable for development
 const development = {
     name :'development',
     asset_path: './assets',
@@ -24,7 +24,7 @@ const development = {
     }
 }
 
-// Environemnt variable for production
+// Environment variable for production
 const production = {
     name :'production',
     asset_path: './assets',

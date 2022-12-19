@@ -1,5 +1,5 @@
 
-
+// function to delete company in ajax
 let deleteCompanyAndSheduledInterviews = function (deletableCompanyId, deletableCompanyAccordian) {
     console.log('insidedeletableCompanyId',deletableCompanyId);
     console.log('deletableCompanyAccordian',deletableCompanyAccordian);

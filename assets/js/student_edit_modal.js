@@ -1,7 +1,8 @@
-console.log("edit-form-loaded");
+// function to edit student details without page relaod
     function studentEdit(formId, closeBtnId, listId, collapseDivId) {
     let formInputValidation = true;
     let formElements = $('#' + formId + " " + "input");
+    // code to perform form validation
     for (inputElement of formElements) {
       if (!inputElement.checkValidity()) {
         formInputValidation = false;
@@ -19,6 +20,7 @@ console.log("edit-form-loaded");
       if ($('#' + collapseDivId).hasClass("show")) {
         addShowClass = true;
       }
+      // code to perform ajax call to /student/update 
       $.ajax({
         type: 'post',
         url: '/student/update',
@@ -39,6 +41,7 @@ console.log("edit-form-loaded");
           toastr.options.timeOut = 1500;
           toastr.success('Student Details Updated');
         }, error: function (error) {
+          // to handle negative sceanrio
             console.log(error.responseText);
             errObj = JSON.parse(error.responseText);
             console.log("harvest error",errObj["message"]);

@@ -1,4 +1,4 @@
-console.log("updated-js-loaded");
+// functiont to update company details without page relaod
 function updateCompanyAjax(formId, closeBtnId, companyAccordianId, collapseDivId) {
   let formInputValidation = true;
   let formElements = $('#' + formId + " " + "input");
@@ -8,6 +8,7 @@ function updateCompanyAjax(formId, closeBtnId, companyAccordianId, collapseDivId
       return inputElement.reportValidity();
     }
   }
+  // code to perform form validation
   if (formInputValidation) {
     console.log("reached Company add form");
     let companyAddForm = $('#' + formId);
@@ -22,7 +23,7 @@ function updateCompanyAjax(formId, closeBtnId, companyAccordianId, collapseDivId
     if ($('#' + collapseDivId).hasClass("show")) {
       addShowClass = true;
     }
-
+    //  code to perform ajax call
     $.ajax({
       type: 'post',
       url: '/company/update',

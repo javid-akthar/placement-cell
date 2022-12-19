@@ -1,3 +1,4 @@
+// function to edit sheduled interview details without page reload
 function editsheduleInterview(formId, closeBtnId) {
     let formInputValidation = true;
     let formElements = $('#' + formId + " " + "input");
@@ -7,6 +8,7 @@ function editsheduleInterview(formId, closeBtnId) {
             return inputElement.reportValidity();
         }
     }
+    // code to perform form validation
     if (formInputValidation) {
         console.log('reached editsheduleInterview');
         let formIdtemp = document.getElementById(formId);
@@ -30,6 +32,7 @@ function editsheduleInterview(formId, closeBtnId) {
                 toastr.options.timeOut = 1500;
                 toastr.success('Interview Updated');
             }, error: function (error) {
+                // to handle error scenario of ajax call
                 console.log(error.responseText);
                 errObj = JSON.parse(error.responseText);
                 console.log("harvest error", errObj["message"]);

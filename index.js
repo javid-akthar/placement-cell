@@ -4,6 +4,7 @@ const env = require('./config/environment');
 const logger = require('morgan');
 const expressLayout = require('express-ejs-layouts')
 const cookieParser = require('cookie-parser');
+// setting up the port
 const port = process.env.PORT || 3000;
 const app = express();
 const db = require('./config/mongoose');
@@ -17,10 +18,9 @@ const MongoStore = require('connect-mongodb-session')(session);
 const sassMiddleware =require('node-sass-middleware');
 const flash = require('connect-flash');
 const customMware = require('./config/middleware');
-console.log('env',env);
 
 
-
+// setting up sass middleware
 app.use(sassMiddleware({
     src: path.join(__dirname, env.asset_path, 'scss'),
     dest: path.join(__dirname, env.asset_path, 'css'),
@@ -29,15 +29,18 @@ app.use(sassMiddleware({
     prefix: '/css',
 }));
 
+// setting up logger
 app.use(logger(env.morgan.mode, env.morgan.options));
+// setting expressLayout
 app.use(expressLayout);
 app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
 
+// setting up body parser
 app.use(bodyParser.urlencoded({extended: false}));
+// setting up cookieParser
 app.use(cookieParser());
 app.use(express.static(env.asset_path));
-// app.use("/static", express.static('./static/'));
 
 
 app.set('view engine', 'ejs');
@@ -68,7 +71,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(passport.setAuthenticatedUser);
-// app.use(flash({ sessionKeyName: 'flashMessage' }));
 app.use(flash());
 app.use(customMware.setFlash);
 app.use('/',require('./routes'));

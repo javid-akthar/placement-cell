@@ -48,19 +48,16 @@
                             <% }else{ %>
                                 <option value="PASS">PASS</option>
                                 <% } %>
-                                    <% console.log(k.result=="FAIL" ) %>
                                         <% if(k.result=="FAIL" ){ %>
                                             <option value="FAIL" selected>FAIL</option>
                                             <% }else{ %>
                                                 <option value="FAIL">FAIL</option>
                                                 <% } %>
-                                                    <% console.log(k.result=="On Hold" ) %>
                                                         <% if(k.result=="On Hold" ){ %>
                                                             <option value="On Hold" selected>On Hold</option>
                                                             <% }else{ %>
                                                                 <option value="On Hold">On Hold</option>
                                                                 <% } %>
-                                                                    <% console.log(k.result=="Didn’t Attempt" ) %>
                                                                         <% if(k.result=="Didn’t Attempt" ){ %>
                                                                             <option value="Didn’t Attempt" selected>
                                                                                 Didn’t Attempt</option>

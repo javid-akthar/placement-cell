@@ -1,3 +1,5 @@
+// function to do toggle change when modal is collapsed and expanded
+
 function toggle(ele) {
     console.log('ele');
     var element = document.getElementById(ele);

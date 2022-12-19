@@ -3,6 +3,7 @@ const https = require('https')
 // controller for fetching job interviews
 module.exports.fetchJob = async function (req, response) {
   try {
+    // calling the job api
     const url = "https://www.arbeitnow.com/api/job-board-api";
     https.get(url, res => {
       let data = '';
@@ -11,9 +12,7 @@ module.exports.fetchJob = async function (req, response) {
       });
       res.on('end', () => {
         data = JSON.parse(data);
-        console.log('data', typeof (data.data[0]));
-        console.log('data', typeof (data));
-        console.log('data', data.data[0]);
+        // sending the jobs list as a rendered page
         return response.render("job_listings", {
           title: "Placement Cell",
           job_list: data.data

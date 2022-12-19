@@ -9,7 +9,6 @@ module.exports.createStudent = async function (req, res) {
     try {
         console.log('value of req', req.body);
         let obj = req.body;
-        console.log('objvalue', req.body);
         let addedStudent = await Student.create(obj);
         let student_list = await Student.find({})
             .populate({
@@ -19,11 +18,7 @@ module.exports.createStudent = async function (req, res) {
                 }
             });
 
-        // let html = await ejs.renderFile(__dirname + '../../views/student_details_list.ejs', {
-        //     title: "Placement Cell",
-        //     i: addedStudent
-        // });
-        console.log('pathsss',path.join(__dirname, '../views/student_details_list.ejs'));
+        // rendering the impacted html elements
         let html = await ejs.renderFile(path.join(__dirname, '../views/student_details_list.ejs'), {
             title: "Placement Cell",
             i: addedStudent
@@ -57,11 +52,12 @@ module.exports.createStudent = async function (req, res) {
 module.exports.deleteStudent = async function (req, res) {
     try {
         console.log('reached deletestudent')
-        console.log(req.query);
-        console.log(req.body);
         let deletableStudnetId = req.query.deletableStudnetId;
         console.log('deletableStudnetId', deletableStudnetId);
+        // deleting the student record
         let deletableStudentRecord = await Student.findByIdAndDelete(deletableStudnetId);
+        // deleting the related interview in interview table
+        // deleting the interview reference in company table
         if (deletableStudentRecord.interviews) {
             for (interview of deletableStudentRecord.interviews) {
                 let removedInterviewRecord = await Interview.findByIdAndDelete(interview);
@@ -92,7 +88,7 @@ module.exports.updateStudent = async function (req, res) {
         console.log('value of req', req.body);
         let obj = req.body;
         let studentId = req.body.id;
-        console.log('objvalue', req.body);
+        // updating the student record
         let modifiedStudent = await Student.findByIdAndUpdate(studentId, obj, { runValidators: true });
         modifiedStudent = await Student.findById(studentId)
         .populate({
@@ -102,10 +98,7 @@ module.exports.updateStudent = async function (req, res) {
             }
           });
 
-        // let html = await ejs.renderFile(__dirname + '../../views/student_details_list.ejs', {
-        //     title: "Placement Cell",
-        //     i: modifiedStudent
-        // });
+        // rendering the impacted html elements
         let html = await ejs.renderFile(path.join(__dirname, '../views/student_details_list.ejs'), {
             title: "Placement Cell",
             i: modifiedStudent
@@ -130,10 +123,16 @@ module.exports.updateStudent = async function (req, res) {
         for(errorObj in err["errors"]){
             console.log(errorObj);
         }
-        return res.status(400).json({
-            message: "not able to update StudentRecord!",
-            error: err["errors"][errorObj]["properties"]["message"]
-        });
+        try{
+            return res.status(400).json({
+                message: "not able to update StudentRecord!",
+                error: err["errors"][errorObj]["properties"]["message"]
+            }); 
+        }catch(err){
+            console.log('error in Update student controller');
+            console.log(err);
+        }
+        
     }
 
 }
