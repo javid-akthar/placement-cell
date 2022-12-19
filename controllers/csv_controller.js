@@ -36,14 +36,11 @@ module.exports.downloadCSV = async function (req, res) {
         singleInterviewRecord["StudentID"] = student._id;
         singleInterviewRecord["StudentName"] = student.name;
         singleInterviewRecord["StudentCollege"] = student.college;
-        singleInterviewRecord["StudentEmail"] = student.email;
-        singleInterviewRecord["StudentPhoneNo"] = student.phone;
         singleInterviewRecord["StudentStatus"] = student.status;
         singleInterviewRecord["DSAScore"] = student.dsaScore;
         singleInterviewRecord["WebDevScore"] = student.webDevelopmentScore;
         singleInterviewRecord["ReactScore"] = student.reactScore;
         singleInterviewRecord["InterviewDate"] = interview.date;
-        singleInterviewRecord["InterviewCompanyId"] = interview.companyId._id;
         singleInterviewRecord["InterviewCompany"] = interview.companyId.companyName;
         singleInterviewRecord["InterviewProfile"] = interview.profile;
         if(interview.result == "Didn’t Attempt"){
@@ -62,14 +59,11 @@ module.exports.downloadCSV = async function (req, res) {
         singleInterviewRecord["StudentID"] = student._id;
         singleInterviewRecord["StudentName"] = student.name;
         singleInterviewRecord["StudentCollege"] = student.college;
-        singleInterviewRecord["StudentEmail"] = student.email;
-        singleInterviewRecord["StudentPhoneNo"] = student.phone;
         singleInterviewRecord["StudentStatus"] = student.status;
         singleInterviewRecord["DSAScore"] = student.dsaScore;
         singleInterviewRecord["WebDevScore"] = student.webDevelopmentScore;
         singleInterviewRecord["ReactScore"] = student.reactScore;
         singleInterviewRecord["InterviewDate"] = "-";
-        singleInterviewRecord["InterviewCompanyId"] = "-";
         singleInterviewRecord["InterviewCompany"] = "-";
         singleInterviewRecord["InterviewProfile"] = "-";
         singleInterviewRecord["InterviewResult"] = "-";
@@ -80,14 +74,11 @@ module.exports.downloadCSV = async function (req, res) {
       "StudentID",
       "StudentName",
       "StudentCollege",
-      "StudentEmail",
-      "StudentPhoneNo",
       "StudentStatus",
       "DSAScore",
       "WebdScore",
       "ReactScore",
       "InterviewDate",
-      "InterviewCompanyId",
       "InterviewCompany",
       "InterviewProfile",
       "InterviewResult"
