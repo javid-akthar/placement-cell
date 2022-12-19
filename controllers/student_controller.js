@@ -63,7 +63,7 @@ module.exports.deleteStudent = async function (req, res) {
                 let removedInterviewRecord = await Interview.findByIdAndDelete(interview);
                 let modifyRequiredCompanyRecord = removedInterviewRecord.companyId;
                 console.log('modifyRequiredCompanyRecord', modifyRequiredCompanyRecord);
-                await Company.findByIdAndUpdate(modifyRequiredCompanyRecord, { $pull: { interviews: removedInterviewRecord._id } });
+                await Company.findByIdAndUpdate(modifyRequiredCompanyRecord, { $pull: { students: removedInterviewRecord._id } });
             }
         }
         let status = true;
