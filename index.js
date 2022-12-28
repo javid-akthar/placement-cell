@@ -5,7 +5,7 @@ const logger = require('morgan');
 const expressLayout = require('express-ejs-layouts')
 const cookieParser = require('cookie-parser');
 // setting up the port
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3006;
 const app = express();
 const db = require('./config/mongoose');
 const bodyParser = require('body-parser');

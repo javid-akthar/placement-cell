@@ -15,7 +15,7 @@
                 </button>
             </div>
             <div class="modal-body<%= company._id %>" style="font-size:16px;">
-                <form id="shedule-interview<%= company._id %>"  method="POST" class="sign-in-form">
+                <form id="shedule-interview<%= company._id %>"  method="POST" class="sign-in-form" ref={inputElement}>
                     <div class="form-group">
                         <label class="required" for="profile">Profile</label>
                         <input required name="profile" type="input" class="form-control form-control-sm" id="profile"
